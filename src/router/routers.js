@@ -188,7 +188,97 @@ export default [
     },
 
 
-
+    {
+        path: '/productManage',
+        name: 'productmanage',
+        meta: {
+            icon: 'md-cloud-upload',
+            title: '产品管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'products',
+                name: 'productmanage-products',
+                meta: {
+                    icon: 'ios-document',
+                    title: '产品管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'productmanage-products-index',
+                        meta: {
+                            icon: 'ios-document',
+                            title: '产品管理'
+                        },
+                        component: () => import('@/view/product-manage/products/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'productmanage-products-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'ios-document',
+                            title: '产品添加'
+                        },
+                        component: () => import('@/view/product-manage/products/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'productmanage-products-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'ios-document',
+                            title: '产品编辑'
+                        },
+                        component: () => import('@/view/product-manage/products/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'categorys',
+                name: 'productmanage-categorys',
+                meta: {
+                    icon: 'ios-document',
+                    title: '分类管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'productmanage-categorys-index',
+                        meta: {
+                            icon: 'ios-document',
+                            title: '分类列表'
+                        },
+                        component: () => import('@/view/product-manage/categorys/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'productmanage-categorys-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'ios-document',
+                            title: '分类添加'
+                        },
+                        component: () => import('@/view/product-manage/categorys/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'productmanage-categorys-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'ios-document',
+                            title: '分类编辑'
+                        },
+                        component: () => import('@/view/product-manage/categorys/add-edit.vue')
+                    },
+                ]
+            }
+        ]
+    },
 
 
 

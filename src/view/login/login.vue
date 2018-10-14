@@ -34,6 +34,8 @@ export default {
             name: this.$config.homeName
           })
         })
+      }).catch(res => {
+          this.$Message.error("登录失败");
       })
     }
   }

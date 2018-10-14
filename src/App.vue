@@ -25,7 +25,10 @@ html,body{
   .size;
 }
 
-form.form-edit input {
-    width: 400px;
-}
+// form.form-edit input {
+//     width: 400px;
+// }
+// form.form-edit .ivu-form-item-content{
+//     width: 400px;
+// }
 </style>

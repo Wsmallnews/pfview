@@ -78,7 +78,7 @@ export default {
                 commit('setHasGetInfo', true)
                 resolve(data)
             } else {
-                reject(err)
+                reject(res)
             }
           }).catch(err => {
             reject(err)

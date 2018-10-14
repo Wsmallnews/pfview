@@ -12,7 +12,11 @@ export const login = ({ userName, password }) => {
             data,
             method: 'get',
             success: function (result) {
-                resolve(result);
+                if (result.error == 0) {
+                    resolve(result);
+                } else {
+                    reject(result);
+                }
             },
             error: function (result) {
                 reject(result);

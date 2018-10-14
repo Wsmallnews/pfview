@@ -27,7 +27,7 @@ export const ajax = function (options){
     options.data.timeStamp = (new Date()).getTime();
 
     var token = getToken();
-    if (token && token != undefined && token != null && token != '') {
+    if (token && token != undefined && token != null && token != 'undefined' && token != '') {
         var token = JSON.parse(token);
         // 带上认证信息
         defaults_options.headers.Authorization = token.token_type + ' ' + token.access_token;
