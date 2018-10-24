@@ -17,56 +17,56 @@
 </template>
 
 <script>
-import Util from '@/libs/util';
+import Util from '@/libs/util'
 export default {
-	components: {
+    components: {
 
     },
     data () {
         return {
-			formValidate:{
-				password:'',
-				password_confirmation: ''
-			},
-			ruleValidate: {
-				password: [
-					{ required: true, message: '请输入密码', trigger: 'blur' }
-				],
-				password_confirmation: [
-					{ required: true, message: '请输入确认密码', trigger: 'blur' }
-				]
-			}
+            formValidate: {
+                password: '',
+                password_confirmation: ''
+            },
+            ruleValidate: {
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur' }
+                ],
+                password_confirmation: [
+                    { required: true, message: '请输入确认密码', trigger: 'blur' }
+                ]
+            }
         }
     },
-	methods: {
-		handleSubmit (name) {
-			var _this = this;
+    methods: {
+        handleSubmit (name) {
+            var _this = this
 
-			_this.$refs[name].validate((valid) => {
-				if (valid) {
-					Util.ajax({
-						url: '/adminapi/admins/resetPassword/' + _this.$route.params.id,
-						method: "patch",
-						data: _this.formValidate,
-						success: function(result){
-							if (result.error == 0) {
-								_this.$Notice.success({title: '提示', desc: '保存成功'});
-								_this.$router.push('/roles/list')
-							}else {
-								_this.$Notice.error({title: '提示', desc: result.info});
-							}
-						}
-					});
-				} else {
-					_this.$Notice.error({title: '提示', desc: '信息填写不完整'});
-				}
-			})
-		}
-	},
-	mounted:function(){
-	},
-	created () {
-	}
+            _this.$refs[name].validate((valid) => {
+                if (valid) {
+                    Util.ajax({
+                        url: '/adminapi/admins/resetPassword/' + _this.$route.params.id,
+                        method: 'patch',
+                        data: _this.formValidate,
+                        success: function (result) {
+                            if (result.error == 0) {
+                                _this.$Notice.success({title: '提示', desc: '保存成功'})
+                                _this.$router.push('/adminManage/admins/index')
+                            } else {
+                                _this.$Notice.error({title: '提示', desc: result.info})
+                            }
+                        }
+                    })
+                } else {
+                  _this.$Notice.error({title: '提示', desc: '信息填写不完整'})
+                }
+            })
+        }
+    },
+    mounted: function () {
+    },
+    created () {
+    }
 }
 </script>
 

@@ -13,7 +13,7 @@
             <menu-item name="basic">基础信息</menu-item>
             <menu-item name="content">产品详情</menu-item>
             <menu-item name="stock_spec">库存/规格</menu-item>
-            <menu-item name="attribute">产品属性</menu-item>
+            <!-- <menu-item name="attribute">产品属性</menu-item> -->
         </Menu>
 
         <div name="basic" v-show="activeName == 'basic'">
@@ -21,7 +21,7 @@
                 <Input v-model="formValidate.name" placeholder="请填写名称"></Input>
             </FormItem>
             <FormItem label="分类" prop="category_id">
-                <Cascader :data="categoryList" v-model="formValidate.category_id" change-on-select></Cascader>
+                <Cascader :data="categorys" v-model="formValidate.category_id" change-on-select></Cascader>
             </FormItem>
             <FormItem label="产品类型" prop="type" required>
                 <RadioGroup v-model="formValidate.type" @on-change="typeChange">
@@ -110,7 +110,7 @@
             </FormItem>
         </div>
 
-        <div name="attribute" v-show="activeName == 'attribute'">
+        <!-- <div name="attribute" v-show="activeName == 'attribute'">
             <FormItem label="产品类别" prop="type">
                 <Select v-model="formValidate.type_id" style="width:200px" @on-change="selectShopType">
                     <Option v-for="(item, index) in types" :value="item.id" :key="item.id">{{ item.name }}</Option>
@@ -131,7 +131,7 @@
                     <Input v-model="type_attrs[index].value" type="textarea" placeholder="请输入内容"></Input>
                 </FormItem>
             </div>
-        </div>
+        </div> -->
 
         <FormItem>
             <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -139,505 +139,540 @@
     </Form>
 </template>
 <script>
-    import Util from '@/libs/util';
-    import myTable from '@/view/includes/myTable';
-    import myUpload from '@/view/includes/myUpload';
-    import myPhoto from '@/view/includes/myPhoto';
+import Util from '@/libs/util'
+import myTable from '@/view/includes/myTable'
+import myUpload from '@/view/includes/myUpload'
+import myPhoto from '@/view/includes/myPhoto'
 
-    export default {
-        components: {
-            myUpload,
-            myTable,
-            myPhoto
-        },
-        data () {
-            return {
-                types: [],
-                type_attrs: [],
-                formValidate: {
-                    id: 0,
-                    name: '',
-                    category_id: [],
-                    type: 'show',
-                    is_virtual: 1,
-                    images: [],
-                    origin_price: 0,
-                    price: 0,
-                    stock: 0,
-                    desc: '',
-                    content: '',
-                    is_on_sale: 1,
-                    is_recommend: 0,
-                    is_special: 0,
-                    spec_item: [],
-                    sort_order: 50,
-                    stock_time: 'downed',    // 默认付款完成减库存
-                    type_id : "",           //产品属性类型shopProductType id
-                    type_attrs: [],           //多属性
-                    start_spec: false,
-                    is_reset_spec: false,
+export default {
+    components: {
+        myUpload,
+        myTable,
+        myPhoto
+    },
+    data() {
+        return {
+            types: [],
+            type_attrs: [],
+            formValidate: {
+                id: 0,
+                name: '',
+                category_id: [],
+                type: 'show',
+                is_virtual: 0,
+                images: [],
+                origin_price: 0,
+                price: 0,
+                stock: 0,
+                desc: '',
+                content: '',
+                is_on_sale: 1,
+                is_recommend: 0,
+                is_special: 0,
+                spec_item: [],
+                sort_order: 50,
+                stock_time: 'downed', // 默认付款完成减库存
+                type_id: '', // 产品属性类型shopProductType id
+                type_attrs: [], // 多属性
+                start_spec: false,
+                is_reset_spec: false
+            },
+            ruleValidate: {
+                name: [
+                    { required: true, message: '请填写名称', trigger: 'blur' }
+                ],
+                category_id: [
+                    { required: true, type: 'array', min: 1, message: '请选择分类', trigger: 'change' }
+                ],
+                origin_price: [
+                    { required: true, message: '原价', type: 'number', min: 0.01, trigger: 'blur' }
+                ],
+                price: [
+                    { required: true, message: '原价', type: 'number', min: 0.01, trigger: 'blur' }
+                ],
+                type_id: [
+                    { required: true, message: '请选择产品属性类型', trigger: 'blur' }
+                ],
+                images: [
+                    { required: false } // 提交的时候验证， 这样只是为了保留 * 号
+                ]
+            },
+            categorys: [],
+            uploadData: {
+                file_type: 'products'
+            },
+            activeName: 'basic',
+            specName: [{
+                    spec_name: '',
+                    item: []
                 },
-                ruleValidate: {
-                    name: [
-                        { required: true, message: '请填写名称', trigger: 'blur' }
-                    ],
-                    category_id: [
-                        { required: true, type: 'array', min: 1, message: '请选择分类', trigger: 'change' },
-                    ],
-                    origin_price: [
-                        { required: true, message: '原价', type: "number", min: 0.01, trigger: 'blur' }
-                    ],
-                    price: [
-                        { required: true, message: '原价', type: "number", min: 0.01, trigger: 'blur' }
-                    ],
-                    type_id: [
-                        { required: true, message: '请选择产品属性类型', trigger: 'blur' }
-                    ],
-                    images: [
-                        { required: false }     // 提交的时候验证， 这样只是为了保留 * 号
-                    ],
+                {
+                    spec_name: '',
+                    item: []
                 },
-                categoryList: [],
-                uploadData: {
-    				file_type: "products"
-    			},
-                activeName: 'basic',
-                specName: [
-                    {
-                        spec_name: '',
-                        item: []
-                    },
-                    {
-                        spec_name: '',
-                        item: []
-                    },
-                    {
-                        spec_name: '',
-                        item: []
-                    },
-                ],                // 规格项
-                specItemEdit: [],       // 多规格（编辑使用）
-                currentSpec: [],    // 多规格编辑
-                specCount: 0,
-                currentTypeId: 0,       // 编辑时的 typeid,默认值（编辑使用）
-                typeAttrEdit: [],       // 多属性（编辑使用）
+                {
+                    spec_name: '',
+                    item: []
+                }
+            ], // 规格项
+            specItemEdit: [], // 多规格（编辑使用）
+            currentSpec: [], // 多规格编辑
+            specCount: 0,
+            currentTypeId: 0, // 编辑时的 typeid,默认值（编辑使用）
+            typeAttrEdit: [], // 多属性（编辑使用）
 
-                typesOk: false,
-                attrTimer: null
+            typesOk: false,
+            attrTimer: null
+        }
+    },
+    computed: {
+        specNoEmptyName() {
+            var specName = this.specName
+            var newSpec = []
+            var spec_i = 0
+            for (let spec of specName) {
+                if (spec.spec_name != '' && spec.item.length > 0) {
+                    newSpec[spec_i] = spec
+                    spec_i++
+                }
             }
+
+            return newSpec
         },
-        computed: {
-            specNoEmptyName () {
-                var specName = this.specName;
-                var newSpec = [];
-                var spec_i = 0;
-                for (let spec of specName) {
-                    if (spec.spec_name != '' && spec.item.length > 0) {
-                        newSpec[spec_i] = spec;
-                        spec_i ++;
-                    }
+        specItem() {
+            var isAdd = !(this.specItemEdit.length > 0) // 主要用来判断 是否有 规格要合并，另外添加 this.specItemEdit.length  == 0
+            var newSpec = this.specNoEmptyName
+            var resetSpec = this.isResetSpec() // 是否重置规格项，改变规格项会出现很多问题
+
+            var specItem = []
+
+            var item_i = 0
+            if (newSpec[0] != undefined) {
+                var opt = {
+                    origin_price: '',
+                    price: '',
+                    stock: ''
                 }
 
-                return newSpec;
-            },
-            specItem () {
-                var isAdd = this.specItemEdit.length > 0 ? false : true;        // 主要用来判断 是否有 规格要合并，另外添加 this.specItemEdit.length  == 0
-                var newSpec = this.specNoEmptyName;
-                var resetSpec = this.isResetSpec();     // 是否重置规格项，改变规格项会出现很多问题
-
-                var specItem = [];
-
-                var item_i = 0;
-                if (newSpec[0] != undefined) {
-                    var opt = {
-                        origin_price: '',
-                        price: '',
-                        stock: '',
+                for (var one of newSpec[0].item) {
+                    if (one == '') {
+                        continue
                     }
 
-                    for (var one of newSpec[0].item) {
-                        if (one == '') {
-                            continue;
-                        }
+                    var options = {
+                        spec_name_one: one
+                    }
 
-                        var options = {
-                            spec_name_one: one,
-                        }
+                    if (newSpec[1] != undefined) {
+                        for (var two of newSpec[1].item) {
+                            if (two == '') {
+                                continue
+                            }
 
-                        if (newSpec[1] != undefined) {
-                            for (var two of newSpec[1].item) {
-                                if (two == '') {
-                                    continue;
-                                }
+                            var options = {
+                                spec_name_one: one,
+                                spec_name_two: two
+                            }
 
-                                var options = {
-                                    spec_name_one: one,
-                                    spec_name_two: two
-                                }
-
-                                if (newSpec[2] != undefined) {
-                                    for (var three of newSpec[2].item) {
-                                        if (three == '') {
-                                            continue;
-                                        }
-
-                                        var options = {
-                                            spec_name_one: one,
-                                            spec_name_two: two,
-                                            spec_name_three: three
-                                        }
-
-                                        if (isAdd) {
-                                            options = Util.extend(options, opt)
-                                        }
-                                        specItem[item_i] = options;
-                                        item_i ++;
+                            if (newSpec[2] != undefined) {
+                                for (var three of newSpec[2].item) {
+                                    if (three == '') {
+                                        continue
                                     }
-                                } else {
+
+                                    var options = {
+                                        spec_name_one: one,
+                                        spec_name_two: two,
+                                        spec_name_three: three
+                                    }
+
                                     if (isAdd) {
                                         options = Util.extend(options, opt)
                                     }
-
-                                    specItem[item_i] = options;
-                                    item_i ++;
+                                    specItem[item_i] = options
+                                    item_i++
                                 }
-                            }
-                        } else {
-                            if (isAdd) {
-                                options = Util.extend(options, opt)
-                            }
-                            specItem[item_i] = options;
-                            item_i ++;
-                        }
-                    }
-                }
-
-                if (!isAdd && !resetSpec) {     // （编辑，并且没有增删规格项 ）初始化值
-                    var result = [];
-                    for (var i in specItem) {
-                        if (this.specItemEdit[i] != undefined) {
-                            result[i] = Util.extend(this.specItemEdit[i], specItem[i])
-                        } else {
-                            result[i] = specItem[i];
-                        }
-                    }
-
-                    specItem = result;
-                }
-
-                return specItem;
-            },
-            specColumns () {
-                var _this = this;
-                var columns = [];
-                var newSpec = this.specNoEmptyName;
-
-                var spec_i = 0;
-                for (let spec of newSpec) {
-                    var key = 'spec_name_one';
-                    if (spec_i == 1) {
-                        key = 'spec_name_two';
-                    } else if (spec_i == 2) {
-                        key = 'spec_name_three';
-                    }
-
-                    columns[spec_i] = {
-                        title: spec.spec_name,
-                        key: key,
-                        minWidth: 150
-                    };
-                    spec_i ++;
-                }
-
-                var inputFunction = function (h, params) {
-                    return h('Input', {
-                        props: {
-                            type: 'text',
-                            value: params['row'][params.column.key],
-                        },
-                        class: [
-                            'form-group-spec-item',
-                            'small-input'
-                        ],
-                        style: {
-                            width: '100px',
-                        },
-                        'on': {
-                            'input': function (event) {
-                                _this.specItem[params.index][params.column.key] = event;
-                            }
-                        }
-                    });
-                }
-
-                var columns2 = [
-                    { title: '原价', key: 'origin_price', width: 140, render: inputFunction },
-                    { title: '现价', key: 'price', width: 140, render: inputFunction },
-                    { title: '库存', key: 'stock', width: 140, render: inputFunction }
-                ];
-
-                return Util.extend(columns, columns2, true);
-            }
-        },
-        methods: {
-            handleSubmit (name) {
-                var _this = this;
-
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        // 添加
-                        var method = "post";
-                        var url = '/adminapi/shopProducts';
-                        if (_this.formValidate.id) {  // 编辑
-                            method = "patch";
-                            var url = '/adminapi/shopProducts/' + _this.formValidate.id;
-                        }
-                        _this.formValidate.images = _this.$refs.images.imgList();
-                        _this.formValidate.content = _this.$refs.content.imgList();
-
-                        // if (_this.formValidate.category_id.length <= 0) {
-                        //     _this.$Notice.error({title: '提示', desc: "请选择产品分类"});
-                        //     return false;
-                        // }
-
-                        if (_this.formValidate.images.length <= 0) {
-                            _this.$Notice.error({title: '提示', desc: "请上传产品图片"});
-                            return false;
-                        }
-
-                        if (_this.formValidate.start_spec) {
-                            var isSpec = true;
-                            for (let item of _this.specItem) {
-                                if (item.origin_price == '' || item.price == '' || item.stock == '') {
-                                    var isSpec = false;
-                                    break;
+                            } else {
+                                if (isAdd) {
+                                    options = Util.extend(options, opt)
                                 }
-                            }
 
-                            if (!isSpec) {
-                                _this.$Notice.error({title: '提示', desc: "规格填写不完整"});
-                                return false;
+                                specItem[item_i] = options
+                                item_i++
                             }
-
-                            _this.formValidate.spec_item = _this.specItem;
-                            _this.formValidate.spec_only_name = _this.specOnlyName();
-                            _this.formValidate.is_reset_spec = _this.isResetSpec();
                         }
-
-                        _this.formValidate.type_attrs = this.type_attrs;    //产品多属性
-
-                        Util.ajax({
-            	            url: url,
-            	            method: method,
-            	            data: _this.formValidate,
-            	            success: function(result){
-            					if (result.error == 0) {
-            				        _this.$Notice.success({title: '提示', desc: '保存成功'});
-                                    _this.$router.push({name: 'productmanage-products-index'});
-                                    // _this.$router.push('/productManage/products/index');
-            				    }else {
-                                    _this.$Notice.error({title: '提示', desc: result.info});
-            				    }
-            	            }
-            	        });
                     } else {
-                        _this.$Notice.error({title: '提示', desc: '信息填写不完整'});
+                        if (isAdd) {
+                            options = Util.extend(options, opt)
+                        }
+                        specItem[item_i] = options
+                        item_i++
+                    }
+                }
+            }
+
+            if (!isAdd && !resetSpec) { // （编辑，并且没有增删规格项 ）初始化值
+                var result = []
+                for (var i in specItem) {
+                    if (this.specItemEdit[i] != undefined) {
+                        result[i] = Util.extend(this.specItemEdit[i], specItem[i])
+                    } else {
+                        result[i] = specItem[i]
+                    }
+                }
+
+                specItem = result
+            }
+
+            return specItem
+        },
+        specColumns() {
+            var _this = this
+            var columns = []
+            var newSpec = this.specNoEmptyName
+
+            var spec_i = 0
+            for (let spec of newSpec) {
+                var key = 'spec_name_one'
+                if (spec_i == 1) {
+                    key = 'spec_name_two'
+                } else if (spec_i == 2) {
+                    key = 'spec_name_three'
+                }
+
+                columns[spec_i] = {
+                    title: spec.spec_name,
+                    key: key,
+                    minWidth: 150
+                }
+                spec_i++
+            }
+
+            var inputFunction = function(h, params) {
+                return h('Input', {
+                    props: {
+                        type: 'text',
+                        value: params['row'][params.column.key]
+                    },
+                    class: [
+                        'form-group-spec-item',
+                        'small-input'
+                    ],
+                    style: {
+                        width: '100px'
+                    },
+                    'on': {
+                        'input': function(event) {
+                            _this.specItem[params.index][params.column.key] = event
+                        }
                     }
                 })
-            },
-            specOnlyName() {        // 计算属性有缓存，改用方法
-                var name = {};
-                var specNoEmptyName = this.specNoEmptyName;
-
-                for (var i in specNoEmptyName) {
-                    var key = 'spec_name_one';
-                    if (i == 1) {
-                        key = 'spec_name_two';
-                    } else if (i == 2) {
-                        key = 'spec_name_three';
-                    }
-                    name[key] = specNoEmptyName[i]['spec_name'];
-                }
-
-                return name;
-            },
-            isResetSpec () {
-                return this.specNoEmptyName.length == this.specCount ? false : true;        // 下面方法更加严格
-                // var resetSpec = false;
-
-                // for (var i in this.specNoEmptyName) {
-                //     if (this.specNoEmptyName[i].item.length != this.currentSpec[i]) {
-                //         resetSpec = true;
-                //         break;
-                //     }
-                // }
-
-                // return resetSpec;
-            },
-            typeChange () {
-                // 优惠券注释
-                if (this.formValidate.type == 'coupon' && this.couponTypeData.length <= 0) {
-                    // this.getCouponTypeAll();
-                }
-            },
-            // getCouponTypeAll:function(){
-            //     var _this = this;
-            //     let couponTypeData = [];
-            //     Util.ajax({
-            //         url: "/adminapi/couponTypes/CouponTypeAll",
-            //         method: "get",
-            //         data: {get_type: 'relative_product'},
-            //         success: function(result){
-            //             if (result.error == 0) {
-            //                 _this.couponTypeData = result.result;
-            //
-            //                 if (result.result.length <= 0 && _this.formValidate.type == 'coupon') {
-            //                     _this.$Notice.warning({ title: '提示', desc: "您还没有添加核销券，请先添加核销券", duration: 0 });
-            //                 }
-            //             }else {
-            //                 _this.$Notice.error({ title: '提示', desc: result.info });
-            //             }
-            //         }
-            //     });
-            //
-            //     return couponTypeData;
-            // },
-            switchItem (code) {     // 切换商品添加表单
-                this.activeName = code;
-            },
-            addItem(index) {
-                this.specName[index].item.push("");
-            },
-            delItem(index, i) {     // 删除规格
-                this.specName[index]['item'].splice(i, 1);
-            },
-            shopAttrTimer () {
-                if (this.typesOk) {
-                    this.selectShopType(this.currentTypeId);
-                    clearTimeout(this.attrTimer);
-                } else {
-                    this.attrTimer = setTimeout(() => {
-                        this.shopAttrTimer();
-                    }, 100);
-                }
-            },
-            selectShopType(value){      // 切换 商品属性，更改下面输入框列表
-                for (let i of this.types) {
-                    if(i.id == value){
-                        if (i.id == this.currentTypeId) {   // 编辑的时候 来回切换时候的 依然显示数据库中的默认值
-                            var type_attrs = i.shop_product_type_attr.length > 0 ? i.shop_product_type_attr : [];
-                            var typeAttrEdit = this.typeAttrEdit;
-
-                            if (type_attrs.length && typeAttrEdit.length) {     // 编辑将默认值赋值到 属性列表
-                                for (var i in  type_attrs) {
-                                    for (let attr of typeAttrEdit) {
-                                        if (type_attrs[i]['id'] == attr.attr_id) {
-                                            type_attrs[i]['value'] = attr.value;
-                                            type_attrs[i]['product_attr_id'] = attr.id;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-
-                            this.type_attrs = type_attrs;
-                        } else {
-                            this.type_attrs = i.shop_product_type_attr.length > 0 ? i.shop_product_type_attr : [];
-                        }
-                    }
-                }
             }
-        },
-        created () {
-            var _this = this;
 
-            // if (_this.formValidate.type == 'coupon') {
-            //     this.getCouponTypeAll();
+            var columns2 = [{
+                    title: '原价',
+                    key: 'origin_price',
+                    width: 140,
+                    render: inputFunction
+                },
+                {
+                    title: '现价',
+                    key: 'price',
+                    width: 140,
+                    render: inputFunction
+                },
+                {
+                    title: '库存',
+                    key: 'stock',
+                    width: 140,
+                    render: inputFunction
+                }
+            ]
+
+            return Util.extend(columns, columns2, true)
+        }
+    },
+    methods: {
+        handleSubmit(name) {
+            var _this = this
+
+            this.$refs[name].validate((valid) => {
+                if (valid) {
+                    // 添加
+                    var method = 'post'
+                    var url = '/adminapi/shopProducts'
+                    if (_this.formValidate.id) { // 编辑
+                        method = 'patch'
+                        var url = '/adminapi/shopProducts/' + _this.formValidate.id
+                    }
+                    _this.formValidate.images = _this.$refs.images.imgList()
+                    _this.formValidate.content = _this.$refs.content.imgList()
+
+                    // if (_this.formValidate.category_id.length <= 0) {
+                    //     _this.$Notice.error({title: '提示', desc: "请选择产品分类"});
+                    //     return false;
+                    // }
+
+                    if (_this.formValidate.images.length <= 0) {
+                        _this.$Notice.error({
+                            title: '提示',
+                            desc: '请上传产品图片'
+                        })
+                        return false
+                    }
+
+                    if (_this.formValidate.start_spec) {
+                        var isSpec = true
+                        for (let item of _this.specItem) {
+                            if (item.origin_price == '' || item.price == '' || item.stock == '') {
+                                var isSpec = false
+                                break
+                            }
+                        }
+
+                        if (!isSpec) {
+                            _this.$Notice.error({
+                                title: '提示',
+                                desc: '规格填写不完整'
+                            })
+                            return false
+                        }
+
+                        _this.formValidate.spec_item = _this.specItem
+                        _this.formValidate.spec_only_name = _this.specOnlyName()
+                        _this.formValidate.is_reset_spec = _this.isResetSpec()
+                    }
+
+                    _this.formValidate.type_attrs = this.type_attrs // 产品多属性
+
+                    Util.ajax({
+                        url: url,
+                        method: method,
+                        data: _this.formValidate,
+                        success: function(result) {
+                            if (result.error == 0) {
+                                _this.$Notice.success({
+                                    title: '提示',
+                                    desc: '保存成功'
+                                })
+                                _this.$router.push({
+                                    name: 'productmanage-products-index'
+                                })
+                                // _this.$router.push('/productManage/products/index');
+                            } else {
+                                _this.$Notice.error({
+                                    title: '提示',
+                                    desc: result.info
+                                })
+                            }
+                        }
+                    })
+                } else {
+                    _this.$Notice.error({
+                        title: '提示',
+                        desc: '信息填写不完整'
+                    })
+                }
+            })
+        },
+        specOnlyName() { // 计算属性有缓存，改用方法
+            var name = {}
+            var specNoEmptyName = this.specNoEmptyName
+
+            for (var i in specNoEmptyName) {
+                var key = 'spec_name_one'
+                if (i == 1) {
+                    key = 'spec_name_two'
+                } else if (i == 2) {
+                    key = 'spec_name_three'
+                }
+                name[key] = specNoEmptyName[i]['spec_name']
+            }
+
+            return name
+        },
+        isResetSpec() {
+            return this.specNoEmptyName.length != this.specCount // 下面方法更加严格
+            // var resetSpec = false;
+
+            // for (var i in this.specNoEmptyName) {
+            //     if (this.specNoEmptyName[i].item.length != this.currentSpec[i]) {
+            //         resetSpec = true;
+            //         break;
+            //     }
             // }
 
-            Util.ajax({     // 获取商品分类
-                url: '/adminapi/shopProductCategorys/catAll',
-                method: 'get',
-                data: {only_top: 0},
-                success: function(result){
-                    if (result.error == 0) {
-                        _this.categoryList = result.result;
-                    }else {
-                        _this.$Notice.error({title: '提示', desc: result.info});
-                    }
-                }
-            });
+            // return resetSpec;
+        },
+        typeChange() {
+            // 优惠券注释
+            if (this.formValidate.type == 'coupon' && this.couponTypeData.length <= 0) {
+                // this.getCouponTypeAll();
+            }
+        },
+        // getCouponTypeAll:function(){
+        //     var _this = this;
+        //     let couponTypeData = [];
+        //     Util.ajax({
+        //         url: "/adminapi/couponTypes/CouponTypeAll",
+        //         method: "get",
+        //         data: {get_type: 'relative_product'},
+        //         success: function(result){
+        //             if (result.error == 0) {
+        //                 _this.couponTypeData = result.result;
+        //
+        //                 if (result.result.length <= 0 && _this.formValidate.type == 'coupon') {
+        //                     _this.$Notice.warning({ title: '提示', desc: "您还没有添加核销券，请先添加核销券", duration: 0 });
+        //                 }
+        //             }else {
+        //                 _this.$Notice.error({ title: '提示', desc: result.info });
+        //             }
+        //         }
+        //     });
+        //
+        //     return couponTypeData;
+        // },
+        switchItem(code) { // 切换商品添加表单
+            this.activeName = code
+        },
+        addItem(index) {
+            this.specName[index].item.push('')
+        },
+        delItem(index, i) { // 删除规格
+            this.specName[index]['item'].splice(i, 1)
+        },
+        shopAttrTimer() {
+            if (this.typesOk) {
+                this.selectShopType(this.currentTypeId)
+                clearTimeout(this.attrTimer)
+            } else {
+                this.attrTimer = setTimeout(() => {
+                    this.shopAttrTimer()
+                }, 100)
+            }
+        },
+        selectShopType(value) { // 切换 商品属性，更改下面输入框列表
+            for (let i of this.types) {
+                if (i.id == value) {
+                    if (i.id == this.currentTypeId) { // 编辑的时候 来回切换时候的 依然显示数据库中的默认值
+                        var type_attrs = i.shop_product_type_attr.length > 0 ? i.shop_product_type_attr : []
+                        var typeAttrEdit = this.typeAttrEdit
 
-            Util.ajax({
-                url: '/adminapi/shopProductTypes/typeAll',
-                method: 'get',
-                success: function(result){
-                    if (result.error == 0) {
-                        _this.types = result.result;
-                        _this.typesOk = true;
-                    }else {
-                        _this.$Notice.error({title: '提示', desc: result.info});
-                    }
-                }
-            });
-
-            if (_this.$route.params.id != undefined) {
-                Util.ajax({
-                    url: '/adminapi/shopProducts/' + _this.$route.params.id,
-                    method: 'get',
-                    success: function(result){
-                        if (result.error == 0) {
-                            var info = result.result;
-
-                            for (var i in _this.formValidate) {
-                                if (i == 'images') {
-                                    _this.formValidate[i] = info['images_arr'];
-                                } else if (i == 'content') {
-                                    _this.formValidate[i] = info['content_arr'];
-                                } else if (i == 'category_id') {
-                                    _this.formValidate[i] = info['category_id_arr'];
-                                } else {
-                                    _this.formValidate[i] = info[i];
-                                }
-
-                                if(i == 'type_attrs'){
-                                    _this.formValidate[i] = info['product_attr'];
-                                }
-                            }
-
-                            // 多规格
-                            _this.specItemEdit = info.spec_item;
-                            _this.specName = result.spec_name;
-
-                            if (_this.specName[0] != undefined && _this.specName[0]['spec_name'] != '') {
-                                _this.formValidate.start_spec = true;
-
-                                // for (var i in _this.specName) {         // 记录所有规格，规格项，发生变化则舍弃老数据
-                                //     _this.currentSpec[i] = _this.specName[i].item.length;
-                                // }
-
-                                for (var i in _this.specName) {         // 记录所有规格，规格项，发生变化则舍弃老数据, 上面方法检测更严格
-                                    if (_this.specName[i].spec_name != '') {
-                                        _this.specCount ++;
+                        if (type_attrs.length && typeAttrEdit.length) { // 编辑将默认值赋值到 属性列表
+                            for (var i in type_attrs) {
+                                for (let attr of typeAttrEdit) {
+                                    if (type_attrs[i]['id'] == attr.attr_id) {
+                                        type_attrs[i]['value'] = attr.value
+                                        type_attrs[i]['product_attr_id'] = attr.id
+                                        break
                                     }
                                 }
                             }
-
-                            // 多属性
-                            _this.currentTypeId = info.type_id;
-                            _this.typeAttrEdit = info.product_attr;         // 编辑
-
-                            _this.attrTimer = setTimeout(function () {
-                                _this.shopAttrTimer();
-                            }, 100);
-                        }else {
-                            _this.$Notice.error({title: '提示', desc: result.info});
                         }
+
+                        this.type_attrs = type_attrs
+                    } else {
+                        this.type_attrs = i.shop_product_type_attr.length > 0 ? i.shop_product_type_attr : []
                     }
-                });
+                }
             }
         }
+    },
+    created() {
+        var _this = this
+
+        // if (_this.formValidate.type == 'coupon') {
+        //     this.getCouponTypeAll();
+        // }
+
+        Util.ajax({ // 获取商品分类
+            url: '/adminapi/shopProductCategorys',
+            method: 'get',
+            success: function(result) {
+                if (result.error == 0) {
+                    _this.categorys = result.result
+                } else {
+                    _this.$Notice.error({
+                        title: '提示',
+                        desc: result.info
+                    })
+                }
+            }
+        })
+
+        // Util.ajax({
+        //     url: '/adminapi/shopProductTypes/typeAll',
+        //     method: 'get',
+        //     success: function(result){
+        //         if (result.error == 0) {
+        //             _this.types = result.result;
+        //             _this.typesOk = true;
+        //         }else {
+        //             _this.$Notice.error({title: '提示', desc: result.info});
+        //         }
+        //     }
+        // });
+
+        if (_this.$route.params.id != undefined) {
+            Util.ajax({
+                url: '/adminapi/shopProducts/' + _this.$route.params.id,
+                method: 'get',
+                success: function(result) {
+                    if (result.error == 0) {
+                        var info = result.result
+
+                        for (var i in _this.formValidate) {
+                            if (i == 'images') {
+                                _this.formValidate[i] = info['images_arr']
+                            } else if (i == 'content') {
+                                _this.formValidate[i] = info['content_arr']
+                            } else if (i == 'category_id') {
+                                _this.formValidate[i] = info['category_id_arr']
+                            } else {
+                                _this.formValidate[i] = info[i]
+                            }
+
+                            if (i == 'type_attrs') {
+                                _this.formValidate[i] = info['product_attr']
+                            }
+                        }
+
+                        // 多规格
+                        _this.specItemEdit = info.spec_item
+                        _this.specName = result.spec_name
+
+                        if (_this.specName[0] != undefined && _this.specName[0]['spec_name'] != '') {
+                            _this.formValidate.start_spec = true
+
+                            // for (var i in _this.specName) {         // 记录所有规格，规格项，发生变化则舍弃老数据
+                            //     _this.currentSpec[i] = _this.specName[i].item.length;
+                            // }
+
+                            for (var i in _this.specName) { // 记录所有规格，规格项，发生变化则舍弃老数据, 上面方法检测更严格
+                                if (_this.specName[i].spec_name != '') {
+                                    _this.specCount++
+                                }
+                            }
+                        }
+
+                        // 多属性
+                        _this.currentTypeId = info.type_id
+                        _this.typeAttrEdit = info.product_attr // 编辑
+
+                        _this.attrTimer = setTimeout(function() {
+                            _this.shopAttrTimer()
+                        }, 100)
+                    } else {
+                        _this.$Notice.error({
+                            title: '提示',
+                            desc: result.info
+                        })
+                    }
+                }
+            })
+        }
     }
+}
 </script>
 
 <style lang="css" scoped>
@@ -652,7 +687,6 @@ form .small-input {
 form .small-input .ivu-input {
     width: 200px;
 }
-
 
 form.form-group.spec input {
     width: 200px !important;

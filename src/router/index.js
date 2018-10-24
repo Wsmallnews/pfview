@@ -10,7 +10,7 @@ const { homeName } = config
 Vue.use(Router)
 const router = new Router({
   routes,
-  mode: 'history'
+  mode: 'hash'
 })
 const LOGIN_PAGE_NAME = 'login'
 
@@ -44,9 +44,9 @@ router.beforeEach((to, from, next) => {
         turnTo(to, user.access, next)
       }).catch(() => {
         store.dispatch('handleLogOut').then(() => {
-            next({
-              name: 'login'
-            })
+          next({
+            name: 'login'
+          })
         })
       })
     }

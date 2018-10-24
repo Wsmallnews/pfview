@@ -49,7 +49,7 @@ export default [
         path: '/adminManage',
         name: 'adminmanage',
         meta: {
-            icon: 'md-cloud-upload',
+            icon: 'md-cog',
             title: '管理设置'
         },
         component: Main,
@@ -58,7 +58,7 @@ export default [
                 path: 'admins',
                 name: 'adminmanage-admins',
                 meta: {
-                    icon: 'ios-document',
+                    icon: 'md-person',
                     title: '管理员管理'
                 },
                 component: parentView,
@@ -67,7 +67,7 @@ export default [
                         path: 'index',
                         name: 'adminmanage-admins-index',
                         meta: {
-                            icon: 'ios-document',
+                            icon: 'md-person',
                             title: '管理员管理'
                         },
                         component: () => import('@/view/admin-manage/admins/index.vue')
@@ -77,7 +77,7 @@ export default [
                         name: 'adminmanage-admins-add',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-person-add',
                             title: '管理员添加'
                         },
                         component: () => import('@/view/admin-manage/admins/add-edit.vue')
@@ -87,7 +87,7 @@ export default [
                         name: 'adminmanage-admins-edit',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-person-add',
                             title: '管理员编辑'
                         },
                         component: () => import('@/view/admin-manage/admins/add-edit.vue')
@@ -97,8 +97,8 @@ export default [
                         name: 'adminmanage-admins-resetpassword',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
-                            title: '管理员编辑'
+                            icon: 'ios-build',
+                            title: '管理员重置密码'
                         },
                         component: () => import('@/view/admin-manage/admins/reset-password.vue')
                     },
@@ -107,7 +107,7 @@ export default [
                         name: 'adminmanage-admins-setrole',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'ios-build',
                             title: '设置角色'
                         },
                         component: () => import('@/view/admin-manage/admins/set-role.vue')
@@ -118,7 +118,7 @@ export default [
                 path: 'roles',
                 name: 'adminmanage-roles',
                 meta: {
-                    icon: 'ios-document',
+                    icon: 'md-person',
                     title: '角色管理'
                 },
                 component: parentView,
@@ -127,7 +127,7 @@ export default [
                         path: 'index',
                         name: 'adminmanage-roles-index',
                         meta: {
-                            icon: 'ios-document',
+                            icon: 'md-person',
                             title: '角色管理'
                         },
                         component: () => import('@/view/admin-manage/roles/index.vue')
@@ -137,7 +137,7 @@ export default [
                         name: 'adminmanage-roles-add',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-person-add',
                             title: '角色添加'
                         },
                         component: () => import('@/view/admin-manage/roles/add-edit.vue')
@@ -147,7 +147,7 @@ export default [
                         name: 'adminmanage-roles-edit',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-person-add',
                             title: '角色编辑'
                         },
                         component: () => import('@/view/admin-manage/roles/add-edit.vue')
@@ -157,7 +157,7 @@ export default [
                         name: 'adminmanage-roles-giveperm',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-settings',
                             title: '分配权限'
                         },
                         component: () => import('@/view/admin-manage/roles/give-perm.vue')
@@ -168,7 +168,7 @@ export default [
                 path: 'adminLogs',
                 name: 'adminmanage-adminlogs',
                 meta: {
-                    icon: 'ios-document',
+                    icon: 'md-list-box',
                     title: '操作日志'
                 },
                 component: parentView,
@@ -177,7 +177,7 @@ export default [
                         path: 'index',
                         name: 'adminmanage-adminlogs-index',
                         meta: {
-                            icon: 'ios-document',
+                            icon: 'md-list-box',
                             title: '操作日志'
                         },
                         component: () => import('@/view/admin-manage/admin-logs/index.vue')
@@ -186,13 +186,11 @@ export default [
             }
         ]
     },
-
-
     {
         path: '/productManage',
         name: 'productmanage',
         meta: {
-            icon: 'md-cloud-upload',
+            icon: 'md-apps',
             title: '产品管理'
         },
         component: Main,
@@ -201,7 +199,7 @@ export default [
                 path: 'products',
                 name: 'productmanage-products',
                 meta: {
-                    icon: 'ios-document',
+                    icon: 'md-apps',
                     title: '产品管理'
                 },
                 component: parentView,
@@ -210,7 +208,7 @@ export default [
                         path: 'index',
                         name: 'productmanage-products-index',
                         meta: {
-                            icon: 'ios-document',
+                            icon: 'md-apps',
                             title: '产品管理'
                         },
                         component: () => import('@/view/product-manage/products/index.vue')
@@ -220,7 +218,7 @@ export default [
                         name: 'productmanage-products-add',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-add',
                             title: '产品添加'
                         },
                         component: () => import('@/view/product-manage/products/add-edit.vue')
@@ -230,7 +228,7 @@ export default [
                         name: 'productmanage-products-edit',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-brush',
                             title: '产品编辑'
                         },
                         component: () => import('@/view/product-manage/products/add-edit.vue')
@@ -238,10 +236,19 @@ export default [
                 ]
             },
             {
+                path: 'trash',
+                name: 'productmanage-trash',
+                meta: {
+                    icon: 'md-trash',
+                    title: '回收站'
+                },
+                component: () => import('@/view/product-manage/products/index.vue')
+            },
+            {
                 path: 'categorys',
                 name: 'productmanage-categorys',
                 meta: {
-                    icon: 'ios-document',
+                    icon: 'md-briefcase',
                     title: '分类管理'
                 },
                 component: parentView,
@@ -250,7 +257,7 @@ export default [
                         path: 'index',
                         name: 'productmanage-categorys-index',
                         meta: {
-                            icon: 'ios-document',
+                            icon: 'md-briefcase',
                             title: '分类列表'
                         },
                         component: () => import('@/view/product-manage/categorys/index.vue')
@@ -260,7 +267,7 @@ export default [
                         name: 'productmanage-categorys-add',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-add',
                             title: '分类添加'
                         },
                         component: () => import('@/view/product-manage/categorys/add-edit.vue')
@@ -270,7 +277,7 @@ export default [
                         name: 'productmanage-categorys-edit',
                         meta: {
                             hideInMenu: true,
-                            icon: 'ios-document',
+                            icon: 'md-brush',
                             title: '分类编辑'
                         },
                         component: () => import('@/view/product-manage/categorys/add-edit.vue')
@@ -280,8 +287,400 @@ export default [
         ]
     },
 
+    {
+        path: '/regions',
+        name: 'regions',
+        meta: {
+            icon: 'md-locate',
+            title: '地域管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'index',
+                name: 'regions-index',
+                meta: {
+                    icon: 'md-locate',
+                    title: '地域管理'
+                },
+                component: () => import('@/view/regions/index.vue')
+            },
+            {
+                path: 'add',
+                name: 'regions-add',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'md-add',
+                    title: '地域添加'
+                },
+                component: () => import('@/view/regions/add-edit.vue')
+            },
+            {
+                path: 'edit/:id',
+                name: 'regions-edit',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'md-brush',
+                    title: '地域编辑'
+                },
+                component: () => import('@/view/regions/add-edit.vue')
+            }
+        ]
+    },
+    {
+        path: '/sellers',
+        name: 'sellers',
+        meta: {
+            icon: 'md-person',
+            title: '销售管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'index',
+                name: 'sellers-index',
+                meta: {
+                    icon: 'md-person',
+                    title: '销售列表'
+                },
+                component: () => import('@/view/sellers/index.vue')
+            },
+            {
+                path: 'add',
+                name: 'sellers-add',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'md-add',
+                    title: '销售添加'
+                },
+                component: () => import('@/view/sellers/add-edit.vue')
+            },
+            {
+                path: 'edit/:id',
+                name: 'sellers-edit',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'md-brush',
+                    title: '销售编辑'
+                },
+                component: () => import('@/view/sellers/add-edit.vue')
+            },
+            {
+                path: 'resetPassword/:id',
+                name: 'sellers-resetpassword',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'ios-build',
+                    title: '销售重置密码'
+                },
+                component: () => import('@/view/sellers/reset-password.vue')
+            },
+        ]
+    },
 
+    {
+        path: '/customerManage',
+        name: 'customermanage',
+        meta: {
+            icon: 'md-people',
+            title: '客户管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'institutions',
+                name: 'customermanage-institutions',
+                meta: {
+                    icon: 'md-home',
+                    title: '机构管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'customermanage-institutions-index',
+                        meta: {
+                            icon: 'md-home',
+                            title: '机构管理'
+                        },
+                        component: () => import('@/view/customer-manage/institutions/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'customermanage-institutions-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-add',
+                            title: '机构添加'
+                        },
+                        component: () => import('@/view/customer-manage/institutions/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'customermanage-institutions-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '机构编辑'
+                        },
+                        component: () => import('@/view/customer-manage/institutions/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'customers',
+                name: 'customermanage-customers',
+                meta: {
+                    icon: 'md-people',
+                    title: '客户管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index/:ins_id?',
+                        name: 'customermanage-customers-index',
+                        meta: {
+                            icon: 'md-people',
+                            title: '客户管理'
+                        },
+                        component: () => import('@/view/customer-manage/customers/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'customermanage-customers-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '客户添加'
+                        },
+                        component: () => import('@/view/customer-manage/customers/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'customermanage-customers-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '客户编辑'
+                        },
+                        component: () => import('@/view/customer-manage/customers/add-edit.vue')
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        path: '/dataManage',
+        name: 'datamanage',
+        meta: {
+            icon: 'md-people',
+            title: '数据管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'achievements',
+                name: 'datamanage-achievements',
+                meta: {
+                    icon: 'md-home',
+                    title: '业绩管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'datamanage-achievements-index',
+                        meta: {
+                            icon: 'md-home',
+                            title: '业绩管理'
+                        },
+                        component: () => import('@/view/data-manage/achievements/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'datamanage-achievements-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-add',
+                            title: '业绩录入'
+                        },
+                        component: () => import('@/view/data-manage/achievements/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'datamanage-achievements-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '业绩编辑'
+                        },
+                        component: () => import('@/view/data-manage/achievements/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'salarys',
+                name: 'datamanage-salarys',
+                meta: {
+                    icon: 'md-home',
+                    title: '工资管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'datamanage-salarys-index',
+                        meta: {
+                            icon: 'md-home',
+                            title: '工资管理'
+                        },
+                        component: () => import('@/view/data-manage/salarys/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'datamanage-salarys-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-add',
+                            title: '业绩录入'
+                        },
+                        component: () => import('@/view/data-manage/salarys/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'datamanage-salarys-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '业绩编辑'
+                        },
+                        component: () => import('@/view/data-manage/salarys/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'reimburs',
+                name: 'datamanage-reimburs',
+                meta: {
+                    icon: 'md-home',
+                    title: '报销管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'datamanage-reimburs-index',
+                        meta: {
+                            icon: 'md-home',
+                            title: '报销管理'
+                        },
+                        component: () => import('@/view/data-manage/reimburs/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'datamanage-reimburs-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-add',
+                            title: '报销录入'
+                        },
+                        component: () => import('@/view/data-manage/reimburs/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'datamanage-reimburs-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '报销编辑'
+                        },
+                        component: () => import('@/view/data-manage/reimburs/add-edit.vue')
+                    },
+                ]
+            }
+        ]
+    },
 
+    {
+        path: '/kpiManage',
+        name: 'kpimanage',
+        meta: {
+            icon: 'md-people',
+            title: 'KPI管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'kpiRules',
+                name: 'kpimanage-kpirules',
+                meta: {
+                    icon: 'md-home',
+                    title: 'KPI 策略管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index/:seller_id?',
+                        name: 'kpimanage-kpirules-index',
+                        meta: {
+                            icon: 'md-home',
+                            title: 'KPI 策略管理'
+                        },
+                        component: () => import('@/view/kpi-manage/kpi-rules/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'kpimanage-kpirules-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-add',
+                            title: '策略添加'
+                        },
+                        component: () => import('@/view/kpi-manage/kpi-rules/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'kpimanage-kpirules-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '策略编辑'
+                        },
+                        component: () => import('@/view/kpi-manage/kpi-rules/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'kpiRules',
+                name: 'kpimanage-kpirules',
+                meta: {
+                    icon: 'md-home',
+                    title: 'KPI 结果'
+                },
+            }
+        ]
+    },
+
+    {
+        path: '/weeks',
+        name: 'weeks',
+        meta: {
+            icon: 'md-locate',
+            title: '行动日历'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'index',
+                name: 'weeks-index',
+                meta: {
+                    icon: 'md-locate',
+                    title: '行动日历'
+                },
+                component: () => import('@/view/weeks/index.vue')
+            }
+        ]
+    },
 
     {
         path: '/401',

@@ -88,14 +88,16 @@
             },
             pagestatus: {
                 default: true
+            },
+            border: {
+                default: false
             }
-
         },
         data () {
             return {
                 loading: false,
                 lighlightRow: true,
-                border: false,
+                // border: false,
                 stripe: true,
                 showSizer: true,    // 显示每页条数下拉框
                 showTotal: true,
