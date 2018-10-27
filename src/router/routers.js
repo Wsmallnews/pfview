@@ -651,8 +651,8 @@ export default [
                 ]
             },
             {
-                path: 'kpiRules',
-                name: 'kpimanage-kpirules',
+                path: 'kpiRuless',
+                name: 'kpimanage-kpiruless',
                 meta: {
                     icon: 'md-home',
                     title: 'KPI 结果'
@@ -678,6 +678,16 @@ export default [
                     title: '行动日历'
                 },
                 component: () => import('@/view/weeks/index.vue')
+            },
+            {
+                path: 'edit/:id',
+                name: 'weeks-edit',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'md-brush',
+                    title: '日历编辑'
+                },
+                component: () => import('@/view/weeks/add-edit.vue')
             }
         ]
     },

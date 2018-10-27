@@ -53,47 +53,86 @@ export default {
                     { title: '周期', align: 'center', key: 'weekname', render: (h, params) => {
                         return h('span', "第 " + params.row.week + " 周")
                     }},
-                    { title: '周类型', align: 'center', key: 'week_type_name', width: 200, render: (h, params) => {
-                        var name = params.row.week_type_name;
-                        var value = params.row.week_type;
-                        return h(myTableEdit, {
-                            props: {
-                                params: params,
-                                name: name,
-                                value: value,
-                                edittingCellId: this.edittingCellId,
-                                editable: true,
-                                options: this.week_types
-                            },
-                            on: {
-                                'input': val => {
-                                    this.edittingVal = val
-                                },
-                                'on-start-edit': (params) => {
-                                    this.edittingCellId = `editting-${params.index}-${params.column.key}`
-                                    // this.$emit('on-start-edit', params)
-                                },
-                                'on-cancel-edit': (params) => {
-                                    this.edittingCellId = ''
-                                    // this.$emit('on-cancel-edit', params)
-                                },
-                                'on-save-edit': (params) => {
-                                    this.editWeek(params, this.edittingVal)
-                                    // this.value[params.row.initRowIndex][params.column.key] = this.edittingText
-                                    // this.$emit('input', this.value)
-                                    // this.$emit('on-save-edit', Object.assign(params, {
-                                    //     value: this.edittingText
-                                    // }))
-                                    this.edittingCellId = ''
-                                }
-                            }
-                        })
-                    }},
+                    { title: '周类型', align: 'center', key: 'week_type_name', width: 200},
+                    // { title: '周类型', align: 'center', key: 'week_type_name', width: 200, render: (h, params) => {
+                    //     var name = params.row.week_type_name;
+                    //     var value = params.row.week_type;
+                    //     return h(myTableEdit, {
+                    //         props: {
+                    //             params: params,
+                    //             name: name,
+                    //             value: value,
+                    //             edittingCellId: this.edittingCellId,
+                    //             editable: true,
+                    //             options: this.week_types
+                    //         },
+                    //         on: {
+                    //             'input': val => {
+                    //                 this.edittingVal = val
+                    //             },
+                    //             'on-start-edit': (params) => {
+                    //                 this.edittingCellId = `editting-${params.index}-${params.column.key}`
+                    //                 // this.$emit('on-start-edit', params)
+                    //             },
+                    //             'on-cancel-edit': (params) => {
+                    //                 this.edittingCellId = ''
+                    //                 // this.$emit('on-cancel-edit', params)
+                    //             },
+                    //             'on-save-edit': (params) => {
+                    //                 this.editWeek(params, this.edittingVal)
+                    //                 // this.value[params.row.initRowIndex][params.column.key] = this.edittingText
+                    //                 // this.$emit('input', this.value)
+                    //                 // this.$emit('on-save-edit', Object.assign(params, {
+                    //                 //     value: this.edittingText
+                    //                 // }))
+                    //                 this.edittingCellId = ''
+                    //             }
+                    //         }
+                    //     })
+                    // }},
                     { title: '开始时间', align: 'center', key: 'start_at_date' },
                     { title: '结束时间', align: 'center', key: 'end_at_date' },
                     { title: '天数', align: 'center', key: 'weekname', render: (h, params) => {
                         return h('span', params.row.days + " 天")
                     }},
+                    { title: '操作', key: 'action', align: 'center', width: 150, fixed: 'right', render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small',
+                                    icon: 'md-brush'
+                                },
+                                style: {
+                                    marginRight: '5px',
+                                    marginBottom: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        var id = params.row.id
+                                        this.jumpPage('/weeks/edit/' + id)
+                                    }
+                                }
+                            }),
+                            h('Button', {
+                                props: {
+                                    type: 'error',
+                                    size: 'small',
+                                    icon: 'md-close'
+                                },
+                                style: {
+                                    marginRight: '5px',
+                                    marginBottom: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        var id = params.row.id
+                                        this.deleteConf(id)
+                                    }
+                                }
+                            })
+                        ])
+                    }}
                 ]
             },
             deleteId: 0
