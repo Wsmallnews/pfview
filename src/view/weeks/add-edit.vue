@@ -69,7 +69,7 @@ export default {
             },
             ruleValidate: {
                 start_at: [
-                    { required: true, message: '请选择考核销售', min: 1, trigger: 'change', type: 'number'}
+                    { required: true, message: '请选择开始日期', trigger: 'change', type: 'date'}
                 ],
                 end_at: [
                     { required: true, message: '请选择考核地域', trigger: 'change', type: 'array'}
@@ -133,7 +133,7 @@ export default {
             _this.$refs[name].resetFields()
         },
         startDate(value, data) {
-            _this.formValidate.start_at = value;
+            this.formValidate.start_at = value;
         },
         endDate(value, data) {
             console.log(value)
