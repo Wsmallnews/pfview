@@ -198,7 +198,6 @@ export default {
         handleSubmit(name) {
             var _this = this
 
-            console.log(_this.formValidate);
             _this.$refs[name].validate((valid) => {
                 if (valid) {
                     var method = 'post'

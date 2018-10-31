@@ -183,6 +183,26 @@ export default [
                         component: () => import('@/view/admin-manage/admin-logs/index.vue')
                     },
                 ]
+            },
+            {
+                path: 'cronLogs',
+                name: 'adminmanage-cronlogs',
+                meta: {
+                    icon: 'md-list-box',
+                    title: '计划任务'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'adminmanage-cronlogs-index',
+                        meta: {
+                            icon: 'md-list-box',
+                            title: '计划任务'
+                        },
+                        component: () => import('@/view/admin-manage/cron-logs/index.vue')
+                    },
+                ]
             }
         ]
     },
@@ -651,12 +671,135 @@ export default [
                 ]
             },
             {
-                path: 'kpiRuless',
-                name: 'kpimanage-kpiruless',
+                path: 'kpiResults',
+                name: 'kpimanage-kpiresults',
                 meta: {
                     icon: 'md-home',
                     title: 'KPI 结果'
                 },
+                component: () => import('@/view/kpi-manage/kpi-results/index.vue')
+            }
+        ]
+    },
+
+    {
+        path: '/prizeManage',
+        name: 'prizemanage',
+        meta: {
+            icon: 'md-people',
+            title: '奖金管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'prizeRules',
+                name: 'prizemanage-prizerules',
+                meta: {
+                    icon: 'md-home',
+                    title: '奖金策略管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index/:seller_id?',
+                        name: 'prizemanage-prizerules-index',
+                        meta: {
+                            icon: 'md-home',
+                            title: '奖金策略管理'
+                        },
+                        component: () => import('@/view/prize-manage/prize-rules/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'prizemanage-prizerules-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-add',
+                            title: '策略添加'
+                        },
+                        component: () => import('@/view/prize-manage/prize-rules/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'prizemanage-prizerules-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '策略编辑'
+                        },
+                        component: () => import('@/view/prize-manage/prize-rules/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'prizeResults',
+                name: 'prizemanage-prizeresults',
+                meta: {
+                    icon: 'md-home',
+                    title: '奖金结果'
+                },
+                component: () => import('@/view/prize-manage/prize-results/index.vue')
+            }
+        ]
+    },
+
+    {
+        path: '/commissionManage',
+        name: 'commissionmanage',
+        meta: {
+            icon: 'md-people',
+            title: '佣金管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'commissionRules',
+                name: 'commissionmanage-commissionrules',
+                meta: {
+                    icon: 'md-home',
+                    title: '佣金策略管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index/:seller_id?',
+                        name: 'commissionmanage-commissionrules-index',
+                        meta: {
+                            icon: 'md-home',
+                            title: '佣金策略管理'
+                        },
+                        component: () => import('@/view/commission-manage/commission-rules/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'commissionmanage-commissionrules-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-add',
+                            title: '策略添加'
+                        },
+                        component: () => import('@/view/commission-manage/commission-rules/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'commissionmanage-commissionrules-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-brush',
+                            title: '策略编辑'
+                        },
+                        component: () => import('@/view/commission-manage/commission-rules/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'commissionResults',
+                name: 'commissionmanage-commissionresults',
+                meta: {
+                    icon: 'md-home',
+                    title: '佣金结果'
+                },
+                component: () => import('@/view/commission-manage/commission-results/index.vue')
             }
         ]
     },
@@ -691,7 +834,26 @@ export default [
             }
         ]
     },
-
+    // {
+    //     path: '/settings',
+    //     name: 'settings',
+    //     meta: {
+    //         icon: 'md-locate',
+    //         title: '系统设置'
+    //     },
+    //     component: Main,
+    //     children: [
+    //         {
+    //             path: 'index',
+    //             name: 'settings-index',
+    //             meta: {
+    //                 icon: 'md-locate',
+    //                 title: '系统设置'
+    //             },
+    //             component: () => import('@/view/settings/index.vue')
+    //         },
+    //     ]
+    // },
     {
         path: '/401',
         name: 'error_401',
