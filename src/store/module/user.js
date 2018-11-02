@@ -8,6 +8,7 @@ export default {
     avatorImgPath: '',
     token: getToken(),
     access: '',
+    superAdmin: 0,
     hasGetInfo: false
   },
   mutations: {
@@ -22,6 +23,9 @@ export default {
     },
     setAccess (state, access) {
       state.access = access
+    },
+    setSuperAdmin (state, bool) {
+      state.superAdmin = bool
     },
     setToken (state, token) {
       state.token = token
@@ -53,7 +57,9 @@ export default {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('setToken', '')
-          commit('setAccess', [])
+          commit('setAccess', []),
+          commit('setSuperAdmin', 0),
+
           resolve()
         }).catch(err => {
           reject(err)
@@ -71,11 +77,15 @@ export default {
           getUserInfo(state.token).then(res => {
             if (res.error == 0) {
                 const data = res.result;
+
                 commit('setAvator', data.avator)
                 commit('setUserName', data.name)
                 commit('setUserId', data.id)
-                // commit('setAccess', data.access)
+                commit('setAccess', data.permissions)
+                commit('setSuperAdmin', data.is_super),
                 commit('setHasGetInfo', true)
+
+                data.access = data.permissions;     // 权限认证
                 resolve(data)
             } else {
                 reject(res)

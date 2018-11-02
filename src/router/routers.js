@@ -46,167 +46,6 @@ export default [
         ]
     },
     {
-        path: '/adminManage',
-        name: 'adminmanage',
-        meta: {
-            icon: 'md-cog',
-            title: '管理设置'
-        },
-        component: Main,
-        children: [
-            {
-                path: 'admins',
-                name: 'adminmanage-admins',
-                meta: {
-                    icon: 'md-person',
-                    title: '管理员管理'
-                },
-                component: parentView,
-                children: [
-                    {
-                        path: 'index',
-                        name: 'adminmanage-admins-index',
-                        meta: {
-                            icon: 'md-person',
-                            title: '管理员管理'
-                        },
-                        component: () => import('@/view/admin-manage/admins/index.vue')
-                    },
-                    {
-                        path: 'add',
-                        name: 'adminmanage-admins-add',
-                        meta: {
-                            hideInMenu: true,
-                            icon: 'md-person-add',
-                            title: '管理员添加'
-                        },
-                        component: () => import('@/view/admin-manage/admins/add-edit.vue')
-                    },
-                    {
-                        path: 'edit/:id',
-                        name: 'adminmanage-admins-edit',
-                        meta: {
-                            hideInMenu: true,
-                            icon: 'md-person-add',
-                            title: '管理员编辑'
-                        },
-                        component: () => import('@/view/admin-manage/admins/add-edit.vue')
-                    },
-                    {
-                        path: 'resetPassword/:id',
-                        name: 'adminmanage-admins-resetpassword',
-                        meta: {
-                            hideInMenu: true,
-                            icon: 'ios-build',
-                            title: '管理员重置密码'
-                        },
-                        component: () => import('@/view/admin-manage/admins/reset-password.vue')
-                    },
-                    {
-                        path: 'setRole/:id',
-                        name: 'adminmanage-admins-setrole',
-                        meta: {
-                            hideInMenu: true,
-                            icon: 'ios-build',
-                            title: '设置角色'
-                        },
-                        component: () => import('@/view/admin-manage/admins/set-role.vue')
-                    },
-                ]
-            },
-            {
-                path: 'roles',
-                name: 'adminmanage-roles',
-                meta: {
-                    icon: 'md-person',
-                    title: '角色管理'
-                },
-                component: parentView,
-                children: [
-                    {
-                        path: 'index',
-                        name: 'adminmanage-roles-index',
-                        meta: {
-                            icon: 'md-person',
-                            title: '角色管理'
-                        },
-                        component: () => import('@/view/admin-manage/roles/index.vue')
-                    },
-                    {
-                        path: 'add',
-                        name: 'adminmanage-roles-add',
-                        meta: {
-                            hideInMenu: true,
-                            icon: 'md-person-add',
-                            title: '角色添加'
-                        },
-                        component: () => import('@/view/admin-manage/roles/add-edit.vue')
-                    },
-                    {
-                        path: 'edit/:id',
-                        name: 'adminmanage-roles-edit',
-                        meta: {
-                            hideInMenu: true,
-                            icon: 'md-person-add',
-                            title: '角色编辑'
-                        },
-                        component: () => import('@/view/admin-manage/roles/add-edit.vue')
-                    },
-                    {
-                        path: 'givePerm/:id',
-                        name: 'adminmanage-roles-giveperm',
-                        meta: {
-                            hideInMenu: true,
-                            icon: 'md-settings',
-                            title: '分配权限'
-                        },
-                        component: () => import('@/view/admin-manage/roles/give-perm.vue')
-                    },
-                ]
-            },
-            {
-                path: 'adminLogs',
-                name: 'adminmanage-adminlogs',
-                meta: {
-                    icon: 'md-list-box',
-                    title: '操作日志'
-                },
-                component: parentView,
-                children: [
-                    {
-                        path: 'index',
-                        name: 'adminmanage-adminlogs-index',
-                        meta: {
-                            icon: 'md-list-box',
-                            title: '操作日志'
-                        },
-                        component: () => import('@/view/admin-manage/admin-logs/index.vue')
-                    },
-                ]
-            },
-            {
-                path: 'cronLogs',
-                name: 'adminmanage-cronlogs',
-                meta: {
-                    icon: 'md-list-box',
-                    title: '计划任务'
-                },
-                component: parentView,
-                children: [
-                    {
-                        path: 'index',
-                        name: 'adminmanage-cronlogs-index',
-                        meta: {
-                            icon: 'md-list-box',
-                            title: '计划任务'
-                        },
-                        component: () => import('@/view/admin-manage/cron-logs/index.vue')
-                    },
-                ]
-            }
-        ]
-    },
-    {
         path: '/productManage',
         name: 'productmanage',
         meta: {
@@ -229,7 +68,8 @@ export default [
                         name: 'productmanage-products-index',
                         meta: {
                             icon: 'md-apps',
-                            title: '产品管理'
+                            title: '产品管理',
+                            access: ['shopProducts_view']
                         },
                         component: () => import('@/view/product-manage/products/index.vue')
                     },
@@ -239,7 +79,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '产品添加'
+                            title: '产品添加',
+                            access: ['shopProducts_edit']
                         },
                         component: () => import('@/view/product-manage/products/add-edit.vue')
                     },
@@ -249,7 +90,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '产品编辑'
+                            title: '产品编辑',
+                            access: ['shopProducts_edit']
                         },
                         component: () => import('@/view/product-manage/products/add-edit.vue')
                     },
@@ -260,7 +102,8 @@ export default [
                 name: 'productmanage-trash',
                 meta: {
                     icon: 'md-trash',
-                    title: '回收站'
+                    title: '回收站',
+                    access: ['shopProducts_view']
                 },
                 component: () => import('@/view/product-manage/products/index.vue')
             },
@@ -269,7 +112,8 @@ export default [
                 name: 'productmanage-categorys',
                 meta: {
                     icon: 'md-briefcase',
-                    title: '分类管理'
+                    title: '分类管理',
+                    access: ['shopProductCategorys_oper']
                 },
                 component: parentView,
                 children: [
@@ -308,46 +152,6 @@ export default [
     },
 
     {
-        path: '/regions',
-        name: 'regions',
-        meta: {
-            icon: 'md-locate',
-            title: '地域管理'
-        },
-        component: Main,
-        children: [
-            {
-                path: 'index',
-                name: 'regions-index',
-                meta: {
-                    icon: 'md-locate',
-                    title: '地域管理'
-                },
-                component: () => import('@/view/regions/index.vue')
-            },
-            {
-                path: 'add',
-                name: 'regions-add',
-                meta: {
-                    hideInMenu: true,
-                    icon: 'md-add',
-                    title: '地域添加'
-                },
-                component: () => import('@/view/regions/add-edit.vue')
-            },
-            {
-                path: 'edit/:id',
-                name: 'regions-edit',
-                meta: {
-                    hideInMenu: true,
-                    icon: 'md-brush',
-                    title: '地域编辑'
-                },
-                component: () => import('@/view/regions/add-edit.vue')
-            }
-        ]
-    },
-    {
         path: '/sellers',
         name: 'sellers',
         meta: {
@@ -361,7 +165,8 @@ export default [
                 name: 'sellers-index',
                 meta: {
                     icon: 'md-person',
-                    title: '销售列表'
+                    title: '销售列表',
+                    access: ['sellers_view']
                 },
                 component: () => import('@/view/sellers/index.vue')
             },
@@ -371,7 +176,8 @@ export default [
                 meta: {
                     hideInMenu: true,
                     icon: 'md-add',
-                    title: '销售添加'
+                    title: '销售添加',
+                    access: ['sellers_edit']
                 },
                 component: () => import('@/view/sellers/add-edit.vue')
             },
@@ -381,7 +187,8 @@ export default [
                 meta: {
                     hideInMenu: true,
                     icon: 'md-brush',
-                    title: '销售编辑'
+                    title: '销售编辑',
+                    access: ['sellers_edit']
                 },
                 component: () => import('@/view/sellers/add-edit.vue')
             },
@@ -391,7 +198,8 @@ export default [
                 meta: {
                     hideInMenu: true,
                     icon: 'ios-build',
-                    title: '销售重置密码'
+                    title: '销售重置密码',
+                    access: ['sellers_edit']
                 },
                 component: () => import('@/view/sellers/reset-password.vue')
             },
@@ -421,7 +229,8 @@ export default [
                         name: 'customermanage-institutions-index',
                         meta: {
                             icon: 'md-home',
-                            title: '机构管理'
+                            title: '机构管理',
+                            access: ['institutions_view']
                         },
                         component: () => import('@/view/customer-manage/institutions/index.vue')
                     },
@@ -431,7 +240,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '机构添加'
+                            title: '机构添加',
+                            access: ['institutions_edit']
                         },
                         component: () => import('@/view/customer-manage/institutions/add-edit.vue')
                     },
@@ -441,7 +251,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '机构编辑'
+                            title: '机构编辑',
+                            access: ['institutions_edit']
                         },
                         component: () => import('@/view/customer-manage/institutions/add-edit.vue')
                     },
@@ -461,7 +272,8 @@ export default [
                         name: 'customermanage-customers-index',
                         meta: {
                             icon: 'md-people',
-                            title: '客户管理'
+                            title: '客户管理',
+                            access: ['customers_view']
                         },
                         component: () => import('@/view/customer-manage/customers/index.vue')
                     },
@@ -471,7 +283,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '客户添加'
+                            title: '客户添加',
+                            access: ['customers_edit']
                         },
                         component: () => import('@/view/customer-manage/customers/add-edit.vue')
                     },
@@ -481,7 +294,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '客户编辑'
+                            title: '客户编辑',
+                            access: ['customers_edit']
                         },
                         component: () => import('@/view/customer-manage/customers/add-edit.vue')
                     }
@@ -489,6 +303,7 @@ export default [
             }
         ]
     },
+
     {
         path: '/dataManage',
         name: 'datamanage',
@@ -512,7 +327,8 @@ export default [
                         name: 'datamanage-achievements-index',
                         meta: {
                             icon: 'md-home',
-                            title: '业绩管理'
+                            title: '业绩管理',
+                            access: ['achievements_view']
                         },
                         component: () => import('@/view/data-manage/achievements/index.vue')
                     },
@@ -522,7 +338,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '业绩录入'
+                            title: '业绩录入',
+                            access: ['achievements_edit']
                         },
                         component: () => import('@/view/data-manage/achievements/add-edit.vue')
                     },
@@ -532,7 +349,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '业绩编辑'
+                            title: '业绩编辑',
+                            access: ['achievements_edit']
                         },
                         component: () => import('@/view/data-manage/achievements/add-edit.vue')
                     },
@@ -552,7 +370,8 @@ export default [
                         name: 'datamanage-salarys-index',
                         meta: {
                             icon: 'md-home',
-                            title: '工资管理'
+                            title: '工资管理',
+                            access: ['salarys_view']
                         },
                         component: () => import('@/view/data-manage/salarys/index.vue')
                     },
@@ -562,7 +381,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '业绩录入'
+                            title: '业绩录入',
+                            access: ['salarys_edit']
                         },
                         component: () => import('@/view/data-manage/salarys/add-edit.vue')
                     },
@@ -572,7 +392,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '业绩编辑'
+                            title: '业绩编辑',
+                            access: ['salarys_edit']
                         },
                         component: () => import('@/view/data-manage/salarys/add-edit.vue')
                     },
@@ -592,7 +413,8 @@ export default [
                         name: 'datamanage-reimburs-index',
                         meta: {
                             icon: 'md-home',
-                            title: '报销管理'
+                            title: '报销管理',
+                            access: ['reimburs_view']
                         },
                         component: () => import('@/view/data-manage/reimburs/index.vue')
                     },
@@ -602,7 +424,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '报销录入'
+                            title: '报销录入',
+                            access: ['reimburs_edit']
                         },
                         component: () => import('@/view/data-manage/reimburs/add-edit.vue')
                     },
@@ -612,7 +435,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '报销编辑'
+                            title: '报销编辑',
+                            access: ['reimburs_edit']
                         },
                         component: () => import('@/view/data-manage/reimburs/add-edit.vue')
                     },
@@ -644,7 +468,8 @@ export default [
                         name: 'kpimanage-kpirules-index',
                         meta: {
                             icon: 'md-home',
-                            title: 'KPI 策略管理'
+                            title: 'KPI 策略管理',
+                            access: ['kpiRules_view']
                         },
                         component: () => import('@/view/kpi-manage/kpi-rules/index.vue')
                     },
@@ -654,7 +479,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '策略添加'
+                            title: '策略添加',
+                            access: ['kpiRules_edit']
                         },
                         component: () => import('@/view/kpi-manage/kpi-rules/add-edit.vue')
                     },
@@ -664,7 +490,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '策略编辑'
+                            title: '策略编辑',
+                            access: ['kpiRules_edit']
                         },
                         component: () => import('@/view/kpi-manage/kpi-rules/add-edit.vue')
                     },
@@ -675,7 +502,8 @@ export default [
                 name: 'kpimanage-kpiresults',
                 meta: {
                     icon: 'md-home',
-                    title: 'KPI 结果'
+                    title: 'KPI 结果',
+                    access: ['kpiResults_view']
                 },
                 component: () => import('@/view/kpi-manage/kpi-results/index.vue')
             }
@@ -705,7 +533,8 @@ export default [
                         name: 'prizemanage-prizerules-index',
                         meta: {
                             icon: 'md-home',
-                            title: '奖金策略管理'
+                            title: '奖金策略管理',
+                            access: ['prizeRules_view']
                         },
                         component: () => import('@/view/prize-manage/prize-rules/index.vue')
                     },
@@ -715,7 +544,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '策略添加'
+                            title: '策略添加',
+                            access: ['prizeRules_edit']
                         },
                         component: () => import('@/view/prize-manage/prize-rules/add-edit.vue')
                     },
@@ -725,7 +555,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '策略编辑'
+                            title: '策略编辑',
+                            access: ['prizeRules_edit']
                         },
                         component: () => import('@/view/prize-manage/prize-rules/add-edit.vue')
                     },
@@ -736,7 +567,8 @@ export default [
                 name: 'prizemanage-prizeresults',
                 meta: {
                     icon: 'md-home',
-                    title: '奖金结果'
+                    title: '奖金结果',
+                    access: ['prizeResults_view']
                 },
                 component: () => import('@/view/prize-manage/prize-results/index.vue')
             }
@@ -766,7 +598,8 @@ export default [
                         name: 'commissionmanage-commissionrules-index',
                         meta: {
                             icon: 'md-home',
-                            title: '佣金策略管理'
+                            title: '佣金策略管理',
+                            access: ['commissionRules_view']
                         },
                         component: () => import('@/view/commission-manage/commission-rules/index.vue')
                     },
@@ -776,7 +609,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '策略添加'
+                            title: '策略添加',
+                            access: ['commissionRules_edit']
                         },
                         component: () => import('@/view/commission-manage/commission-rules/add-edit.vue')
                     },
@@ -786,7 +620,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '策略编辑'
+                            title: '策略编辑',
+                            access: ['commissionRules_edit']
                         },
                         component: () => import('@/view/commission-manage/commission-rules/add-edit.vue')
                     },
@@ -797,9 +632,54 @@ export default [
                 name: 'commissionmanage-commissionresults',
                 meta: {
                     icon: 'md-home',
-                    title: '佣金结果'
+                    title: '佣金结果',
+                    access: ['commissionResults_view']
                 },
                 component: () => import('@/view/commission-manage/commission-results/index.vue')
+            }
+        ]
+    },
+
+    {
+        path: '/regions',
+        name: 'regions',
+        meta: {
+            icon: 'md-locate',
+            title: '地域管理'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'index',
+                name: 'regions-index',
+                meta: {
+                    icon: 'md-locate',
+                    title: '地域管理',
+                    access: ['regions_view']
+                },
+                component: () => import('@/view/regions/index.vue')
+            },
+            {
+                path: 'add',
+                name: 'regions-add',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'md-add',
+                    title: '地域添加',
+                    access: ['regions_oper']
+                },
+                component: () => import('@/view/regions/add-edit.vue')
+            },
+            {
+                path: 'edit/:id',
+                name: 'regions-edit',
+                meta: {
+                    hideInMenu: true,
+                    icon: 'md-brush',
+                    title: '地域编辑',
+                    access: ['regions_oper']
+                },
+                component: () => import('@/view/regions/add-edit.vue')
             }
         ]
     },
@@ -818,7 +698,8 @@ export default [
                 name: 'weeks-index',
                 meta: {
                     icon: 'md-locate',
-                    title: '行动日历'
+                    title: '行动日历',
+                    access: ['weeks_view']
                 },
                 component: () => import('@/view/weeks/index.vue')
             },
@@ -828,32 +709,230 @@ export default [
                 meta: {
                     hideInMenu: true,
                     icon: 'md-brush',
-                    title: '日历编辑'
+                    title: '日历编辑',
+                    access: ['weeks_edit']
                 },
                 component: () => import('@/view/weeks/add-edit.vue')
             }
         ]
     },
-    // {
-    //     path: '/settings',
-    //     name: 'settings',
-    //     meta: {
-    //         icon: 'md-locate',
-    //         title: '系统设置'
-    //     },
-    //     component: Main,
-    //     children: [
-    //         {
-    //             path: 'index',
-    //             name: 'settings-index',
-    //             meta: {
-    //                 icon: 'md-locate',
-    //                 title: '系统设置'
-    //             },
-    //             component: () => import('@/view/settings/index.vue')
-    //         },
-    //     ]
-    // },
+
+    {
+        path: '/adminManage',
+        name: 'adminmanage',
+        meta: {
+            icon: 'md-cog',
+            title: '管理设置'
+        },
+        component: Main,
+        children: [
+            {
+                path: 'admins',
+                name: 'adminmanage-admins',
+                meta: {
+                    icon: 'md-person',
+                    title: '管理员管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'adminmanage-admins-index',
+                        meta: {
+                            icon: 'md-person',
+                            title: '管理员管理',
+                            access: ['admins_view']
+                        },
+                        component: () => import('@/view/admin-manage/admins/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'adminmanage-admins-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-person-add',
+                            title: '管理员添加',
+                            access: ['admins_edit']
+                        },
+                        component: () => import('@/view/admin-manage/admins/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'adminmanage-admins-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-person-add',
+                            title: '管理员编辑',
+                            access: ['admins_edit']
+                        },
+                        component: () => import('@/view/admin-manage/admins/add-edit.vue')
+                    },
+                    {
+                        path: 'resetPassword/:id',
+                        name: 'adminmanage-admins-resetpassword',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'ios-build',
+                            title: '管理员重置密码',
+                            access: ['admins_edit']
+                        },
+                        component: () => import('@/view/admin-manage/admins/reset-password.vue')
+                    },
+                    {
+                        path: 'setRole/:id',
+                        name: 'adminmanage-admins-setrole',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'ios-build',
+                            title: '设置角色',
+                            access: ['admins_roles']
+                        },
+                        component: () => import('@/view/admin-manage/admins/set-role.vue')
+                    },
+                ]
+            },
+            {
+                path: 'roles',
+                name: 'adminmanage-roles',
+                meta: {
+                    icon: 'md-person',
+                    title: '角色管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'adminmanage-roles-index',
+                        meta: {
+                            icon: 'md-person',
+                            title: '角色管理',
+                            access: ['roles_view']
+                        },
+                        component: () => import('@/view/admin-manage/roles/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'adminmanage-roles-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-person-add',
+                            title: '角色添加',
+                            access: ['roles_edit']
+                        },
+                        component: () => import('@/view/admin-manage/roles/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'adminmanage-roles-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-person-add',
+                            title: '角色编辑',
+                            access: ['roles_edit']
+                        },
+                        component: () => import('@/view/admin-manage/roles/add-edit.vue')
+                    },
+                    {
+                        path: 'givePerm/:id',
+                        name: 'adminmanage-roles-giveperm',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-settings',
+                            title: '分配权限',
+                            access: ['roles_permission']
+                        },
+                        component: () => import('@/view/admin-manage/roles/give-perm.vue')
+                    },
+                ]
+            },
+            {
+                path: 'permissions',
+                name: 'adminmanage-permissions',
+                meta: {
+                    icon: 'md-list-box',
+                    title: '权限管理'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'adminmanage-permissions-index',
+                        meta: {
+                            icon: 'md-list-box',
+                            title: '权限管理',
+                            access: ['permissions_oper']
+                        },
+                        component: () => import('@/view/admin-manage/permissions/index.vue')
+                    },
+                    {
+                        path: 'add',
+                        name: 'adminmanage-permissions-add',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-person-add',
+                            title: '权限添加',
+                            access: ['permissions_oper']
+                        },
+                        component: () => import('@/view/admin-manage/permissions/add-edit.vue')
+                    },
+                    {
+                        path: 'edit/:id',
+                        name: 'adminmanage-permissions-edit',
+                        meta: {
+                            hideInMenu: true,
+                            icon: 'md-person-add',
+                            title: '权限编辑',
+                            access: ['permissions_oper']
+                        },
+                        component: () => import('@/view/admin-manage/permissions/add-edit.vue')
+                    },
+                ]
+            },
+            {
+                path: 'adminLogs',
+                name: 'adminmanage-adminlogs',
+                meta: {
+                    icon: 'md-list-box',
+                    title: '操作日志'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'adminmanage-adminlogs-index',
+                        meta: {
+                            icon: 'md-list-box',
+                            title: '操作日志',
+                            access: ['adminLogs_view']
+                        },
+                        component: () => import('@/view/admin-manage/admin-logs/index.vue')
+                    },
+                ]
+            },
+            {
+                path: 'cronLogs',
+                name: 'adminmanage-cronlogs',
+                meta: {
+                    icon: 'md-list-box',
+                    title: '计划任务'
+                },
+                component: parentView,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'adminmanage-cronlogs-index',
+                        meta: {
+                            icon: 'md-list-box',
+                            title: '计划任务',
+                            access: ['cronLogs_view']
+                        },
+                        component: () => import('@/view/admin-manage/cron-logs/index.vue')
+                    },
+                ]
+            }
+        ]
+    },
+
     {
         path: '/401',
         name: 'error_401',
