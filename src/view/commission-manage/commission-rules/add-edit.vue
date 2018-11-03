@@ -1,47 +1,24 @@
 <template lang="html">
-	<div class="kpi-rules-add-edit">
+	<div class="commission-rules-add-edit">
 		<Form class="form-edit" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
-            <Form-item label="考核销售" prop="seller_id">
-				<Select v-model="formValidate.seller_id" placeholder="请选择考核销售">
-	                <Option v-for="item in sellers" :value="item.id" :key="item.id">{{ item.name }} - {{ item.phone }}</Option>
-	            </Select>
-            </Form-item>
-
-            <FormItem label="考核地域" prop="region_id" >
-                <Cascader
-                    :data="regions"
-                    v-model="formValidate.region_id"
-                    placeholder="请选择考核地域"
-                    change-on-select
-                    @on-change="regionChange"
-                    >
-                </Cascader>
-            </FormItem>
-
-            <Form-item label="考核产品" prop="product_id">
-				<Select v-model="formValidate.product_id" placeholder="请选择考核产品" >
-	                <Option v-for="item in products" :value="item.id" :key="item.id">{{ item.name }}</Option>
-	            </Select>
-            </Form-item>
-
-            <Form-item label="考核开始时间" prop="start_at">
-                <Select v-model="formValidate.start_at" placeholder="请选择考核开始时间">
-	                <Option v-for="item in weeks" :value="item.start_at" :key="item.start_at">{{ item.year }} 年 -- 第 {{ item.quarter }} 季度 -- 第 {{ item.quarter }} 季度 -- 第 {{ item.month }} 月 -- 第 {{ item.week }} 周</Option>
-	            </Select>
+            <Form-item label="佣金开始时间" prop="start_at">
+                <Select v-model="formValidate.start_at" placeholder="请选择佣金开始时间">
+                    <Option v-for="item in weeks" :value="item.start_at" :key="item.start_at">{{ item.year }} 年 -- 第 {{ item.quarter }} 季度 -- 第 {{ item.quarter }} 季度 -- 第 {{ item.month }} 月 -- 第 {{ item.week }} 周</Option>
+                </Select>
                 <span class="form-hints"><Icon type="md-alert" /> 所选择行动日历的开始时间</span>
             </Form-item>
 
-            <Form-item label="考核结束时间" prop="end_at">
-                <Select v-model="formValidate.end_at" placeholder="请选择考核结束时间" >
+            <Form-item label="佣金结束时间" prop="end_at">
+                <Select v-model="formValidate.end_at" placeholder="请选择佣金结束时间" >
                     <Option v-for="item in weeks" :value="item.end_at" :key="item.end_at">{{ item.year }} 年 -- 第 {{ item.quarter }} 季度 -- 第 {{ item.quarter }} 季度 -- 第 {{ item.month }} 月 -- 第 {{ item.week }} 周</Option>
-	            </Select>
+                </Select>
                 <span class="form-hints"><Icon type="md-alert" /> 所选择行动日历的结束时间</span>
             </Form-item>
 
-            <Form-item label="考核周期" prop="cycle">
-                <Select v-model="formValidate.cycle" placeholder="请选择考核周期">
-                    <Option v-for="item in cycles" :value="item.value" :key="item.value">{{ item.name }}</Option>
-                </Select>
+            <Form-item label="相关产品" prop="product_id">
+				<Select v-model="formValidate.product_id" placeholder="请选择相关产品" >
+	                <Option v-for="item in products" :value="item.id" :key="item.id">{{ item.name }}</Option>
+	            </Select>
             </Form-item>
 
             <Form-item label="考核类型" prop="type">
@@ -52,6 +29,10 @@
 
             <Form-item label="考核标准" prop="standard">
                 <Input v-model="formValidate.standard" placeholder="请输入考核标准"></Input>
+            </Form-item>
+
+            <Form-item label="佣金" prop="money">
+                <InputNumber v-model="formValidate.money" placeholder="请输入佣金金额"></InputNumber>
             </Form-item>
 
 			<Form-item label="备注" prop="remark">
@@ -76,52 +57,40 @@ export default {
     },
     data() {
         return {
-            sellers: [],
             products: [],
-            regions: [],
             weeks: [],
-            cycles: [],
             types: [
                 {name: '销售额', value: 'money'},
                 {name: '销售单数', value: 'num'},
             ],
             formValidate: {
                 id: 0,
-                seller_id: 0,
-                region_id: [],
-                region_name: [],
-                product_id: 0,
                 start_at: '',
                 end_at: '',
-                cycle: '',
+                product_id: 0,
                 type: '',
                 standard: '',
+                money: 0,
                 remark: ''
             },
             ruleValidate: {
-                seller_id: [
-                    { required: true, message: '请选择考核销售', min: 1, trigger: 'change', type: 'number'}
-                ],
-                region_id: [
-                    { required: true, message: '请选择考核地域', trigger: 'change', type: 'array'}
-                ],
-                product_id: [
-                    { required: true, message: '请选择考核产品', min: 1, trigger: 'change', type: 'number'}
-                ],
                 start_at: [
                     { required: true, message: '请选择考核开始时间', trigger: 'change'}
                 ],
                 end_at: [
                     { required: true, message: '请选择考核结束时间', trigger: 'change'}
                 ],
-                cycle: [
-                    { required: true, message: '请选择考核周期', trigger: 'change'}
+                product_id: [
+                    { required: true, message: '请选择考核产品', min: 1, trigger: 'change', type: 'number'}
                 ],
                 type: [
                     { required: true, message: '请选择考核类型', trigger: 'change'}
                 ],
                 standard: [
                     { required: true, message: '请填写考核标准', trigger: 'blur' }
+                ],
+                money: [
+                    { required: true, message: '请填写奖金金额', min: 0.01, trigger: 'blur', type: 'number'}
                 ],
             }
         }
@@ -135,10 +104,10 @@ export default {
             _this.$refs[name].validate((valid) => {
                 if (valid) {
                     var method = 'post'
-                    var url = '/adminapi/kpiRules'
+                    var url = '/adminapi/commissionRules'
                     if (_this.formValidate.id) { // 编辑
                         method = 'patch'
-                        var url = '/adminapi/kpiRules/' + _this.formValidate.id
+                        var url = '/adminapi/commissionRules/' + _this.formValidate.id
                     }
 
                     Util.ajax({
@@ -148,7 +117,7 @@ export default {
                         success: function(result) {
                             if (result.error == 0) {
                                 _this.$Notice.success({ title: '提示', desc: '保存成功' })
-                                _this.$router.push('/kpiManage/kpiRules/index')
+                                _this.$router.push('/commissionManage/commissionRules/index')
                             } else {
                                 _this.$Notice.error({ title: '提示', desc: result.info })
                             }
@@ -176,19 +145,13 @@ export default {
         var _this = this
         if (_this.$route.params.id != undefined) {
             Util.ajax({
-                url: '/adminapi/kpiRules/' + _this.$route.params.id,
+                url: '/adminapi/commissionRules/' + _this.$route.params.id,
                 method: 'get',
                 success: function(result) {
                     if (result.error == 0) {
                         var info = result.result
                         for (var i in _this.formValidate) {
                             _this.formValidate[i] = info[i]
-                            if (i == 'region_id') {
-                                _this.formValidate[i] = info['region_id_arr']
-                            }
-                            if (i == 'region_name') {
-                                _this.formValidate[i] = info['region_name_arr']
-                            }
                         }
                     } else {
                         _this.$Notice.error({ title: '提示', desc: result.info })
@@ -196,32 +159,6 @@ export default {
                 }
             })
         }
-
-        // 所有销售
-        Util.ajax({
-            url: '/adminapi/sellers/all',
-            method: 'get',
-            success: function(result) {
-                if (result.error == 0) {
-                    _this.sellers = result.result
-                } else {
-                    _this.$Notice.error({ title: '提示', desc: result.info })
-                }
-            }
-        })
-
-        // 所有地域
-        Util.ajax({
-            url: '/adminapi/regions',
-            method: 'get',
-            success: function(result) {
-                if (result.error == 0) {
-                    _this.regions = result.result
-                } else {
-                    _this.$Notice.error({ title: '提示', desc: result.info })
-                }
-            }
-        })
 
         // 所有产品
         Util.ajax({
@@ -242,18 +179,6 @@ export default {
             success: function(result) {
                 if (result.error == 0) {
                     _this.weeks = result.result;
-                } else {
-                    _this.$Notice.error({ title: '提示', desc: result.info })
-                }
-            }
-        })
-
-        Util.ajax({
-            url: '/adminapi/kpiRules/cycleAll',
-            method: 'get',
-            success: function(result) {
-                if (result.error == 0) {
-                    _this.cycles = result.result;
                 } else {
                     _this.$Notice.error({ title: '提示', desc: result.info })
                 }

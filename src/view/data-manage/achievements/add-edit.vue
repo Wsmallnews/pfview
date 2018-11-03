@@ -18,6 +18,12 @@
                 </Cascader>
             </FormItem>
 
+			<Form-item label="相关客户" prop="customer_id">
+				<Select v-model="formValidate.customer_id" placeholder="请选择所属销售">
+	                <Option v-for="item in customers" :value="item.id" :key="item.id">{{ item.name }} - {{ item.phone }}</Option>
+	            </Select>
+            </Form-item>
+
             <Form-item label="产品" prop="product_id">
 				<Select v-model="formValidate.product_id" placeholder="请选择销售产品" @on-change="productChange">
 	                <Option v-for="item in products" :value="item.id" :key="item.id">{{ item.name }}</Option>
@@ -69,11 +75,13 @@ export default {
             sellers: [],
             products: [],
             regions: [],
+			customers: [],
             formValidate: {
                 id: 0,
                 seller_id: 0,
                 region_id: [],
                 region_name: [],
+				customer_id: 0,
                 product_id: 0,
                 price: 0,
                 sale_num: 0,
@@ -203,6 +211,19 @@ export default {
             success: function(result) {
                 if (result.error == 0) {
                     _this.regions = result.result
+                } else {
+                    _this.$Notice.error({ title: '提示', desc: result.info })
+                }
+            }
+        })
+
+		// 所有客户
+        Util.ajax({
+            url: '/adminapi/customers/all',
+            method: 'get',
+            success: function(result) {
+                if (result.error == 0) {
+                    _this.customers = result.result
                 } else {
                     _this.$Notice.error({ title: '提示', desc: result.info })
                 }

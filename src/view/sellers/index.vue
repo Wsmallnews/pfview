@@ -157,7 +157,7 @@ export default {
         }
     },
     created: function() {
-
+        console.log('index-----');
     },
     mounted: function() {}
 }

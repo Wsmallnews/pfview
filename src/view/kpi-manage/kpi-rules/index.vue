@@ -61,8 +61,10 @@ export default {
                     { title: '开始时间', align: 'center', key: 'start_at_date', width: 120 },
                     { title: '结束时间', align: 'center', key: 'end_at_date', width: 120 },
                     { title: '考核周期', align: 'center', key: 'cycle_name', width: 90 },
-                    { title: '考核标准', align: 'center', key: 'standard_money', width: 90 },
+                    { title: '考核类型', align: 'center', key: 'type_name', width: 90 },
+                    { title: '考核标准', align: 'center', key: 'standard', width: 90 },
                     { title: '状态', align: 'center', key: 'end_name', width: 100 },
+                    { title: '执行状态', align: 'center', key: 'exec_name', width: 100 },
                     { title: '备注', align: 'center', key: 'remark', width: 200 },
                     { title: '添加时间', align: 'center', key: 'created_at', width: 150},
                     { title: '操作', key: 'action', align: 'center', width: 150, fixed: 'right', render: (h, params) => {
