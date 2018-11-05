@@ -50,7 +50,8 @@ export default [
         name: 'productmanage',
         meta: {
             icon: 'md-apps',
-            title: '产品管理'
+            title: '产品管理',
+            access: ['shopProducts_view', 'shopProductCategorys_oper']
         },
         component: Main,
         children: [
@@ -59,7 +60,8 @@ export default [
                 name: 'productmanage-products',
                 meta: {
                     icon: 'md-apps',
-                    title: '产品管理'
+                    title: '产品管理',
+                    access: ['shopProducts_view']
                 },
                 component: parentView,
                 children: [
@@ -122,7 +124,8 @@ export default [
                         name: 'productmanage-categorys-index',
                         meta: {
                             icon: 'md-briefcase',
-                            title: '分类列表'
+                            title: '分类列表',
+                            access: ['shopProductCategorys_oper']
                         },
                         component: () => import('@/view/product-manage/categorys/index.vue')
                     },
@@ -132,7 +135,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-add',
-                            title: '分类添加'
+                            title: '分类添加',
+                            access: ['shopProductCategorys_oper']
                         },
                         component: () => import('@/view/product-manage/categorys/add-edit.vue')
                     },
@@ -142,7 +146,8 @@ export default [
                         meta: {
                             hideInMenu: true,
                             icon: 'md-brush',
-                            title: '分类编辑'
+                            title: '分类编辑',
+                            access: ['shopProductCategorys_oper']
                         },
                         component: () => import('@/view/product-manage/categorys/add-edit.vue')
                     },
@@ -156,7 +161,8 @@ export default [
         name: 'sellers',
         meta: {
             icon: 'md-person',
-            title: '销售管理'
+            title: '销售管理',
+            access: ['sellers_view']
         },
         component: Main,
         children: [
@@ -211,7 +217,8 @@ export default [
         name: 'customermanage',
         meta: {
             icon: 'md-people',
-            title: '客户管理'
+            title: '客户管理',
+            access: ['institutions_view', 'customers_view']
         },
         component: Main,
         children: [
@@ -220,7 +227,8 @@ export default [
                 name: 'customermanage-institutions',
                 meta: {
                     icon: 'md-home',
-                    title: '机构管理'
+                    title: '机构管理',
+                    access: ['institutions_view']
                 },
                 component: parentView,
                 children: [
@@ -263,7 +271,8 @@ export default [
                 name: 'customermanage-customers',
                 meta: {
                     icon: 'md-people',
-                    title: '客户管理'
+                    title: '客户管理',
+                    access: ['customers_view']
                 },
                 component: parentView,
                 children: [
@@ -308,8 +317,9 @@ export default [
         path: '/dataManage',
         name: 'datamanage',
         meta: {
-            icon: 'md-people',
-            title: '数据管理'
+            icon: 'md-podium',
+            title: '数据管理',
+            access: ['achievements_view', 'salarys_view', 'reimburs_view']
         },
         component: Main,
         children: [
@@ -317,8 +327,9 @@ export default [
                 path: 'achievements',
                 name: 'datamanage-achievements',
                 meta: {
-                    icon: 'md-home',
-                    title: '业绩管理'
+                    icon: 'md-podium',
+                    title: '业绩管理',
+                    access: ['achievements_view']
                 },
                 component: parentView,
                 children: [
@@ -326,7 +337,7 @@ export default [
                         path: 'index',
                         name: 'datamanage-achievements-index',
                         meta: {
-                            icon: 'md-home',
+                            icon: 'md-podium',
                             title: '业绩管理',
                             access: ['achievements_view']
                         },
@@ -360,8 +371,9 @@ export default [
                 path: 'salarys',
                 name: 'datamanage-salarys',
                 meta: {
-                    icon: 'md-home',
-                    title: '工资管理'
+                    icon: 'logo-yen',
+                    title: '工资管理',
+                    access: ['salarys_view']
                 },
                 component: parentView,
                 children: [
@@ -369,7 +381,7 @@ export default [
                         path: 'index',
                         name: 'datamanage-salarys-index',
                         meta: {
-                            icon: 'md-home',
+                            icon: 'logo-yen',
                             title: '工资管理',
                             access: ['salarys_view']
                         },
@@ -403,8 +415,9 @@ export default [
                 path: 'reimburs',
                 name: 'datamanage-reimburs',
                 meta: {
-                    icon: 'md-home',
-                    title: '报销管理'
+                    icon: 'md-cash',
+                    title: '报销管理',
+                    access: ['reimburs_view']
                 },
                 component: parentView,
                 children: [
@@ -412,7 +425,7 @@ export default [
                         path: 'index',
                         name: 'datamanage-reimburs-index',
                         meta: {
-                            icon: 'md-home',
+                            icon: 'md-cash',
                             title: '报销管理',
                             access: ['reimburs_view']
                         },
@@ -449,8 +462,9 @@ export default [
         path: '/kpiManage',
         name: 'kpimanage',
         meta: {
-            icon: 'md-people',
-            title: 'KPI管理'
+            icon: 'md-checkmark',
+            title: 'KPI管理',
+            access: ['kpiRules_view', 'kpiResults_view']
         },
         component: Main,
         children: [
@@ -458,8 +472,9 @@ export default [
                 path: 'kpiRules',
                 name: 'kpimanage-kpirules',
                 meta: {
-                    icon: 'md-home',
-                    title: 'KPI 策略管理'
+                    icon: 'md-list',
+                    title: 'KPI 策略管理',
+                    access: ['kpiRules_view']
                 },
                 component: parentView,
                 children: [
@@ -467,7 +482,7 @@ export default [
                         path: 'index/:seller_id?',
                         name: 'kpimanage-kpirules-index',
                         meta: {
-                            icon: 'md-home',
+                            icon: 'md-list',
                             title: 'KPI 策略管理',
                             access: ['kpiRules_view']
                         },
@@ -501,7 +516,7 @@ export default [
                 path: 'kpiResults',
                 name: 'kpimanage-kpiresults',
                 meta: {
-                    icon: 'md-home',
+                    icon: 'md-checkbox',
                     title: 'KPI 结果',
                     access: ['kpiResults_view']
                 },
@@ -514,8 +529,9 @@ export default [
         path: '/prizeManage',
         name: 'prizemanage',
         meta: {
-            icon: 'md-people',
-            title: '奖金管理'
+            icon: 'logo-yen',
+            title: '奖金管理',
+            access: ['prizeRules_view', 'prizeResults_view']
         },
         component: Main,
         children: [
@@ -523,8 +539,9 @@ export default [
                 path: 'prizeRules',
                 name: 'prizemanage-prizerules',
                 meta: {
-                    icon: 'md-home',
-                    title: '奖金策略管理'
+                    icon: 'md-list',
+                    title: '奖金策略管理',
+                    access: ['prizeRules_view']
                 },
                 component: parentView,
                 children: [
@@ -532,7 +549,7 @@ export default [
                         path: 'index/:seller_id?',
                         name: 'prizemanage-prizerules-index',
                         meta: {
-                            icon: 'md-home',
+                            icon: 'md-list',
                             title: '奖金策略管理',
                             access: ['prizeRules_view']
                         },
@@ -566,7 +583,7 @@ export default [
                 path: 'prizeResults',
                 name: 'prizemanage-prizeresults',
                 meta: {
-                    icon: 'md-home',
+                    icon: 'md-checkbox',
                     title: '奖金结果',
                     access: ['prizeResults_view']
                 },
@@ -579,8 +596,9 @@ export default [
         path: '/commissionManage',
         name: 'commissionmanage',
         meta: {
-            icon: 'md-people',
-            title: '佣金管理'
+            icon: 'md-list-box',
+            title: '佣金管理',
+            access: ['commissionRules_view', 'commissionResults_view']
         },
         component: Main,
         children: [
@@ -588,8 +606,9 @@ export default [
                 path: 'commissionRules',
                 name: 'commissionmanage-commissionrules',
                 meta: {
-                    icon: 'md-home',
-                    title: '佣金策略管理'
+                    icon: 'md-list',
+                    title: '佣金策略管理',
+                    access: ['commissionRules_view']
                 },
                 component: parentView,
                 children: [
@@ -597,7 +616,7 @@ export default [
                         path: 'index/:seller_id?',
                         name: 'commissionmanage-commissionrules-index',
                         meta: {
-                            icon: 'md-home',
+                            icon: 'md-list',
                             title: '佣金策略管理',
                             access: ['commissionRules_view']
                         },
@@ -631,7 +650,7 @@ export default [
                 path: 'commissionResults',
                 name: 'commissionmanage-commissionresults',
                 meta: {
-                    icon: 'md-home',
+                    icon: 'md-checkbox',
                     title: '佣金结果',
                     access: ['commissionResults_view']
                 },
@@ -645,7 +664,8 @@ export default [
         name: 'regions',
         meta: {
             icon: 'md-locate',
-            title: '地域管理'
+            title: '地域管理',
+            access: ['regions_view']
         },
         component: Main,
         children: [
@@ -688,8 +708,9 @@ export default [
         path: '/weeks',
         name: 'weeks',
         meta: {
-            icon: 'md-locate',
-            title: '行动日历'
+            icon: 'md-calendar',
+            title: '行动日历',
+            access: ['weeks_view']
         },
         component: Main,
         children: [
@@ -697,7 +718,7 @@ export default [
                 path: 'index',
                 name: 'weeks-index',
                 meta: {
-                    icon: 'md-locate',
+                    icon: 'md-calendar',
                     title: '行动日历',
                     access: ['weeks_view']
                 },
@@ -722,7 +743,8 @@ export default [
         name: 'adminmanage',
         meta: {
             icon: 'md-cog',
-            title: '管理设置'
+            title: '管理设置',
+            access: ['admins_view', 'roles_view', 'permissions_oper', 'adminLogs_view', 'cronLogs_view']
         },
         component: Main,
         children: [
@@ -731,7 +753,8 @@ export default [
                 name: 'adminmanage-admins',
                 meta: {
                     icon: 'md-person',
-                    title: '管理员管理'
+                    title: '管理员管理',
+                    access: ['admins_view']
                 },
                 component: parentView,
                 children: [
@@ -796,7 +819,8 @@ export default [
                 name: 'adminmanage-roles',
                 meta: {
                     icon: 'md-person',
-                    title: '角色管理'
+                    title: '角色管理',
+                    access: ['roles_view']
                 },
                 component: parentView,
                 children: [
@@ -850,7 +874,8 @@ export default [
                 name: 'adminmanage-permissions',
                 meta: {
                     icon: 'md-list-box',
-                    title: '权限管理'
+                    title: '权限管理',
+                    access: ['permissions_oper']
                 },
                 component: parentView,
                 children: [
@@ -893,7 +918,8 @@ export default [
                 name: 'adminmanage-adminlogs',
                 meta: {
                     icon: 'md-list-box',
-                    title: '操作日志'
+                    title: '操作日志',
+                    access: ['adminLogs_view']
                 },
                 component: parentView,
                 children: [
@@ -914,7 +940,8 @@ export default [
                 name: 'adminmanage-cronlogs',
                 meta: {
                     icon: 'md-list-box',
-                    title: '计划任务'
+                    title: '计划任务',
+                    access: ['cronLogs_view']
                 },
                 component: parentView,
                 children: [

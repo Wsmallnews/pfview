@@ -33,7 +33,7 @@ export default {
     local: localRead('local')
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access)
+    menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access, rootState.user.superAdmin)
   },
   mutations: {
     setBreadCrumb (state, route) {

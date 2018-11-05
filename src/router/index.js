@@ -14,16 +14,12 @@ const router = new Router({
 })
 const LOGIN_PAGE_NAME = 'login'
 
+// smallews 增加 is_super
 const turnTo = (to, access, next, is_super) => {
-  if (is_super) {
-    // 超级管理员
-    next()
+  if (canTurnTo(to.name, access, routes, is_super)){
+    next() // 有权限，可访问
   } else {
-    if (canTurnTo(to.name, access, routes)){
-      next() // 有权限，可访问
-    } else {
-      next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
-    }
+    next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
   }
 }
 
