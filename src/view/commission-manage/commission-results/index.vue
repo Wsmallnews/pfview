@@ -32,19 +32,19 @@ export default {
                 item: [],
                 columns: [
                     { type: 'index', align: 'center', width: 100, fixed: 'left' },
-                    { title: '佣金客户', align: 'center', key: 'sellername', width: 150, render: (h, params) => {
+                    { title: '佣金客户', align: 'center', key: 'sellername', render: (h, params) => {
                         return params.row.customer ? h('span', params.row.customer.name + '-' + params.row.customer.phone) : h('span', '')
                     }},
-                    { title: '相关产品', align: 'center', key: 'productname', width: 200, render: (h, params) => {
+                    { title: '相关产品', align: 'center', key: 'productname', render: (h, params) => {
                         return params.row.product ? h('span', params.row.product.name) : h('span', '')
                     }},
-                    { title: '考核类型', align: 'center', key: 'type_name', width: 90, render: (h, params) => {
-                        return params.row.commissionRule ? h('span', params.row.commissionRule.type_name) : h('span', '')
+                    { title: '考核类型', align: 'center', key: 'type_name', render: (h, params) => {
+                        return params.row.commission_rule ? h('span', params.row.commission_rule.type_name) : h('span', '')
                     }},
-                    { title: '考核标准', align: 'center', key: 'standard', width: 90, render: (h, params) => {
-                        return params.row.commissionRule ? h('span', params.row.commissionRule.standard) : h('span', '')
+                    { title: '考核标准', align: 'center', key: 'standard', render: (h, params) => {
+                        return params.row.commission_rule ? h('span', params.row.commission_rule.standard) : h('span', '')
                     }},
-                    { title: '佣金', align: 'center', key: 'commission', width: 90},
+                    { title: '佣金', align: 'center', key: 'commission'},
                     { title: '添加时间', align: 'center', key: 'created_at', width: 150}
                 ]
             },

@@ -14,7 +14,7 @@
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :user-avator="userAvator"/>
           <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
-          <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <!-- <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/> -->
         </header-bar>
       </Header>
       <Content class="main-content-con">
