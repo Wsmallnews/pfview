@@ -2,7 +2,7 @@
     <div class="upload-index">
         <div class="upload-list" v-for="(item,index) in uploadList">
             <template v-if="item.status === 'finished'">
-                <img :src="item.url + '?imageView2/5/w/100/h/100'">
+                <img :src="item.url + '&imageView2/5/w/100/h/100'">
                 <div class="upload-list-cover">
                     <Icon type="ios-eye-outline" @click.native="handleView(item)"></Icon>
                     <Icon v-if="!noEdit" type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
