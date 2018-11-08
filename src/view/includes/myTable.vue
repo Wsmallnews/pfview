@@ -12,12 +12,13 @@
         </Form>
 
         <div class="oper_div">
-            <slot name="formBtn" >
+            <slot name="formBtn" :exportLoading="exportLoading">
 
             </slot>
         </div>
 
         <Table
+            ref="table"
             :row-class-name="rowClassName"
             :loading="loading"
             :highlight-row="lighlightRow"
@@ -115,6 +116,7 @@
                 current: 1,
                 queryParams: {},
                 onePage: false,
+                exportLoading: false
             }
         },
         computed: {
@@ -223,6 +225,50 @@
                 }
 
                 return "";
+            },
+            exportCsv: function (options, opt = {}) {
+                var route = this.$route;
+                var columnsCB = options.columnsCB;
+                var dataCB = options.dataCB;
+
+                delete options.columnsCB;
+                delete options.dataCB;
+
+                var data = this.item;
+
+
+                var defaultOptions = {
+                    filename: route.meta != undefined ? (route.meta.title ? route.meta.title : '导出数据') : '导出数据',
+                    original: true,
+                    columns: columnsCB != undefined ? this.cListConf.columns.filter(columnsCB) : this.cListConf.columns,
+                }
+
+                // opt 里面不能包含 data
+                defaultOptions = Util.extend(defaultOptions, opt)
+
+                // 全部数据
+                if (options.isAll) {
+                    this.exportLoading = true;
+                    var oldPageSize = this.queryParams['page_size'];
+                    this.queryParams['page_size'] = 99999999999;
+
+                    this.listLoadData((result) => {
+                        this.exportLoading = false;
+
+                        if (!result.error){
+                            // 将 page_size 还原
+                            this.queryParams['page_size'] = oldPageSize;
+                            var data = result.result;
+                            var item = data.data;
+
+                            defaultOptions.data = dataCB != undefined ? item.filter(dataCB) : item;
+                            this.$refs.table.exportCsv(defaultOptions);
+                        }
+                    });
+                } else {
+                    defaultOptions.data = dataCB != undefined ? this.item.filter(dataCB) : this.item;
+                    this.$refs.table.exportCsv(defaultOptions);
+                }
             }
         },
         created: function () {
@@ -245,6 +291,10 @@
 	color: #FFFFFF !important;
 }
 .oper_div button {
+    margin: 0 5px;
+}
+
+.oper_div .ivu-btn-group {
     margin: 0 5px;
 }
 </style>

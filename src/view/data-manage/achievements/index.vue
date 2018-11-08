@@ -7,8 +7,12 @@
                 </Form-item>
             </template>
 
-            <template slot="formBtn" >
+            <template slot="formBtn" slot-scope="params">
                 <Button type="primary" @click="jumpPage({ path: '/dataManage/achievements/add' })"><Icon type="plus-round"></Icon>业绩录入</Button>
+                <ButtonGroup>
+                    <Button type="primary" @click="exportData(0)"><Icon type="md-cloud-download" /> 导出当前页</Button>
+                    <Button type="primary" :loading="params.exportLoading" @click="exportData(1)"> 全部</Button>
+                </ButtonGroup>
             </template>
         </myTable>
     </div>
@@ -152,6 +156,34 @@ export default {
                     }
                 }
             })
+        },
+        exportData: function (isAll) {
+            this.$refs.listTable.exportCsv({
+                isAll: isAll,
+                columnsCB: function (item, index, columns) {
+                    return index > 0 && index <= 11;
+                },
+                dataCB: function (item, index, data) {
+                    item.sellername = item.seller ? item.seller.name + '-' + item.seller.phone : '';
+
+                    var region_name = ''
+                    var first = true
+                    for (let region of item.region_name_arr) {
+                        if (first) {
+                            region_name += region
+                        } else {
+                            region_name += '-' + region
+                        }
+                        first = false
+                    }
+
+                    item.region_name = region_name;
+                    item.customername = item.customer ? item.customer.name + '-' + item.customer.phone : '';
+                    item.productname = item.product ? item.product.name : '';
+
+                    return item;
+                },
+            });
         }
     },
     created: function() {

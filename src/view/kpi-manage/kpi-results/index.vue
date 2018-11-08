@@ -8,6 +8,13 @@
     	            </Select>
                 </Form-item>
             </template>
+
+            <template slot="formBtn" slot-scope="params">
+                <ButtonGroup>
+                    <Button type="primary" @click="exportData(0)"><Icon type="md-cloud-download" /> 导出当前页</Button>
+                    <Button type="primary" :loading="params.exportLoading" @click="exportData(1)"> 全部</Button>
+                </ButtonGroup>
+            </template>
         </myTable>
     </div>
 </template>
@@ -84,6 +91,36 @@ export default {
         },
         jumpPage: function(path) {
             this.$router.push(path)
+        },
+        exportData: function (isAll) {
+            this.$refs.listTable.exportCsv({
+                isAll: isAll,
+                columnsCB: function (item, index, columns) {
+                    return index > 0;
+                },
+                dataCB: function (item, index, data) {
+                    item.sellername = item.seller ? item.seller.name + '-' + item.seller.phone : '';
+
+                    var region_name = ''
+                    var first = true
+                    for (let region of item.kpi_rule.region_name_arr) {
+                        if (first) {
+                            region_name += region
+                        } else {
+                            region_name += '-' + region
+                        }
+                        first = false
+                    }
+
+                    item.region_name = region_name;
+                    item.productname = item.product ? item.product.name : '';
+                    item.cycle_name = item.kpi_rule ? item.kpi_rule.cycle_name : '';
+                    item.type_name = item.kpi_rule ? item.kpi_rule.type_name : '';
+                    item.standard = item.kpi_rule ? item.kpi_rule.standard : '';
+
+                    return item;
+                },
+            });
         }
     },
     created: function() {

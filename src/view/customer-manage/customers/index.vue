@@ -13,8 +13,13 @@
                 </Form-item>
             </template>
 
-            <template slot="formBtn" >
+            <template slot="formBtn" slot-scope="params">
                 <Button type="primary" @click="jumpPage({ path: '/customerManage/customers/add' })">添加客户</Button>
+
+                <ButtonGroup>
+                    <Button type="primary" @click="exportData(0)"><Icon type="md-cloud-download" /> 导出当前页</Button>
+                    <Button type="primary" :loading="params.exportLoading" @click="exportData(1)"> 全部</Button>
+                </ButtonGroup>
             </template>
         </myTable>
     </div>
@@ -145,6 +150,20 @@ export default {
                     }
                 }
             })
+        },
+        exportData: function (isAll) {
+            this.$refs.listTable.exportCsv({
+                isAll: isAll,
+                columnsCB: function (item, index, columns) {
+                    return index > 0 && index <= 10;
+                },
+                dataCB: function (item, index, data) {
+                    item.sellername = item.seller ? item.seller.name + '-' + item.seller.phone : '';
+                    item.institutionname = item.institution ? item.institution.name : '';
+
+                    return item;
+                },
+            });
         }
     },
     created: function() {

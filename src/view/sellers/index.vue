@@ -6,9 +6,14 @@
                     <Input type="text" v-model="listConf.searchParams.keyword" placeholder="搜索姓名/手机号" ></Input>
                 </Form-item>
             </template>
-            <template slot="formBtn" >
+            <template slot="formBtn" slot-scope="params">
                 <Button type="primary" @click="jumpPage({ path: '/sellers/add' })"><Icon type="plus-round"></Icon>销售添加</Button>
                 <Button type="primary" @click="showKpiRules"><Icon type="plus-round"></Icon>查看 KPI 考核</Button>
+
+                <ButtonGroup>
+                    <Button type="primary" @click="exportData(0)"><Icon type="md-cloud-download" /> 导出当前页</Button>
+                    <Button type="primary" :loading="params.exportLoading" @click="exportData(1)"> 全部</Button>
+                </ButtonGroup>
             </template>
         </myTable>
     </div>
@@ -154,10 +159,20 @@ export default {
             } else {
                 this.$router.push({ path: '/kpiManage/kpiRules/index/' + this.currentRow.id })
             }
+        },
+        exportData: function (isAll) {
+            this.$refs.listTable.exportCsv({
+                isAll: isAll,
+                columnsCB: function (item, index, columns) {
+                    return index > 0 && index <= 6;
+                },
+                dataCB: function (item, index, data) {
+                    return item;
+                },
+            });
         }
     },
     created: function() {
-        console.log('index-----');
     },
     mounted: function() {}
 }

@@ -7,8 +7,12 @@
                 </Form-item>
             </template>
 
-            <template slot="formBtn" >
+            <template slot="formBtn" slot-scope="params">
                 <Button type="primary" @click="jumpPage({ path: '/dataManage/reimburs/add' })"><Icon type="plus-round"></Icon>报销录入</Button>
+                <ButtonGroup>
+                    <Button type="primary" @click="exportData(0)"><Icon type="md-cloud-download" /> 导出当前页</Button>
+                    <Button type="primary" :loading="params.exportLoading" @click="exportData(1)"> 全部</Button>
+                </ButtonGroup>
             </template>
         </myTable>
     </div>
@@ -34,14 +38,14 @@ export default {
                 item: [],
                 columns: [
                     { type: 'index', align: 'center', width: 100, fixed: 'left' },
-                    { title: '所属销售', align: 'center', width: 100, key: 'sellername', render: (h, params) => {
+                    { title: '所属销售', align: 'center', key: 'sellername', render: (h, params) => {
                         return params.row.seller ? h('span', params.row.seller.name + '-' + params.row.seller.phone) : h('span', '')
                     }},
-                    { title: '报销项目', align: 'center', width: 100, key: 'project' },
-                    { title: '报销事由说明', align: 'center', width: 100, key: 'explain' },
-                    { title: '报销金额', align: 'center', width: 100, key: 'money' },
-                    { title: '备注', align: 'center', width: 100, key: 'remark' },
-                    { title: '添加时间', align: 'center', width: 100, key: 'created_at' },
+                    { title: '报销项目', align: 'center', key: 'project' },
+                    { title: '报销事由说明', align: 'center', key: 'explain' },
+                    { title: '报销金额', align: 'center', key: 'money' },
+                    { title: '备注', align: 'center', width: 150, key: 'remark' },
+                    { title: '添加时间', align: 'center', width: 150, key: 'created_at' },
                     { title: '操作', key: 'action', align: 'center', width: 150, fixed: 'right', render: (h, params) => {
                         return h('div', [
                             h('Button', {
@@ -131,6 +135,19 @@ export default {
                     }
                 }
             })
+        },
+        exportData: function (isAll) {
+            this.$refs.listTable.exportCsv({
+                isAll: isAll,
+                columnsCB: function (item, index, columns) {
+                    return index > 0 && index <= 6;
+                },
+                dataCB: function (item, index, data) {
+                    item.sellername = item.seller ? item.seller.name + '-' + item.seller.phone : '';
+
+                    return item;
+                },
+            });
         }
     },
     created: function() {

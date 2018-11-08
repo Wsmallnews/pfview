@@ -10,8 +10,12 @@
                 </Form-item>
             </template>
 
-            <template slot="formBtn" >
+            <template slot="formBtn" slot-scope="params">
                 <Button type="primary" @click="jumpPage({ path: '/dataManage/salarys/add' })"><Icon type="plus-round"></Icon>工资录入</Button>
+                <ButtonGroup>
+                    <Button type="primary" @click="exportData(0)"><Icon type="md-cloud-download" /> 导出当前页</Button>
+                    <Button type="primary" :loading="params.exportLoading" @click="exportData(1)"> 全部</Button>
+                </ButtonGroup>
             </template>
         </myTable>
     </div>
@@ -169,6 +173,19 @@ export default {
                     }
                 }
             })
+        },
+        exportData: function (isAll) {
+            this.$refs.listTable.exportCsv({
+                isAll: isAll,
+                columnsCB: function (item, index, columns) {
+                    return index > 0 && index <= 9;
+                },
+                dataCB: function (item, index, data) {
+                    item.sellername = item.seller ? item.seller.name + '-' + item.seller.phone : '';
+
+                    return item;
+                },
+            });
         }
     },
     created: function() {
